@@ -30,7 +30,7 @@ const companySchema = z.object({
 
 const SignUp = () => {
   const {
-    formState,
+    // formState,
     setFormState,
     createCompany,
     axiosError,
