@@ -1,6 +1,6 @@
 "use client";
 import { Box, Button, FormControl, Typography } from "@mui/material";
-import React  from "react";
+import React, { useEffect } from "react";
 import NameField from "./NameField";
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
@@ -9,8 +9,8 @@ import IndustryField from "./IndustryField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import { logCompanyStore, useCompanyStore } from "../store/sign-up.store";
-// import { toast } from "react-toastify";
+import { logCompanyStore, useCompanyStore } from "../store/sign-up.store";
+import { toast } from "react-toastify";
 
 export type CompanyType = {
   name: string;
@@ -29,21 +29,19 @@ const companySchema = z.object({
 });
 
 const SignUp = () => {
-  // const {
-  //   formState,
-  //   setFormState,
-  //   createCompany,
-  //   axiosError,
-  //   success,
-  //   isLoading,
-  // } = useCompanyStore();
+  const {
+    formState,
+    setFormState,
+    createCompany,
+    axiosError,
+    success,
+    isLoading,
+  } = useCompanyStore();
   const {
     register,
     handleSubmit,
-    // reset,
-    formState: { errors, 
-      // isSubmitting 
-    },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<CompanyType>({
     resolver: zodResolver(companySchema),
     defaultValues: {
@@ -55,39 +53,37 @@ const SignUp = () => {
     },
   });
 
-  // useEffect(() => {
-  //   if (success) {
-  //     reset({
-  //       name: "",
-  //       email: "",
-  //       password: "",
-  //       country: "",
-  //       industry: "",
-  //     });
-  //   }
-  // }, [success, reset]);
+  useEffect(() => {
+    if (success) {
+      reset({
+        name: "",
+        email: "",
+        password: "",
+        country: "",
+        industry: "",
+      });
+    }
+  }, [success, reset]);
 
-  // const onSubmit = async (data: CompanyType) => {
-  //   if (Object.keys(errors).length > 0) {
-  //     return;
-  //   }
-  //   setFormState(data);
+  const onSubmit = async (data: CompanyType) => {
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+    setFormState(data);
 
-  //   try {
-  //     await createCompany(data);
-  //     if (success === true) {
-  //     reset();
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //     if (axiosError) {
-  //       toast.error(axiosError);
-  //     }
-  //   }
-  //   logCompanyStore();
-  // };
-
-  const onSubmit = async () => {};
+    try {
+      await createCompany(data);
+      if (success === true) {
+        reset();
+      }
+    } catch (e) {
+      console.log(e);
+      if (axiosError) {
+        toast.error(axiosError);
+      }
+    }
+    logCompanyStore();
+  };
 
   return (
     <form
@@ -136,7 +132,7 @@ const SignUp = () => {
           type="submit"
           variant="contained"
           color="primary"
-          // disabled={isLoading || isSubmitting}
+          disabled={isLoading || isSubmitting}
         >
           Sign up
         </Button>

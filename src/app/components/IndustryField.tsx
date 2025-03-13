@@ -50,19 +50,22 @@
 
 // export default IndustryField;
 
+
+
+
 "use client";
 import {
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  // SelectChangeEvent,
+  SelectChangeEvent,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 import { CompanyType } from "./SignUp";
-// import { useCompanyStore } from "../store/sign-up.store";
+import { useCompanyStore } from "../store/sign-up.store";
 
 export type IndustryFieldPropsType = {
   register: UseFormRegister<CompanyType>;
@@ -72,14 +75,14 @@ export type IndustryFieldPropsType = {
 };
 
 const IndustryField = ({ register, errors }: IndustryFieldPropsType) => {
-  // const { formState, setFormState } = useCompanyStore();
+  const { formState, setFormState } = useCompanyStore();
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setFormState({
-  //     ...formState,
-  //     industry: event.target.value,
-  //   });
-  // };
+  const handleChange = (event: SelectChangeEvent) => {
+    setFormState({
+      ...formState,
+      industry: event.target.value,
+    });
+  };
 
   return (
     <div className="w-full relative">
@@ -88,8 +91,8 @@ const IndustryField = ({ register, errors }: IndustryFieldPropsType) => {
         <Select
           {...register("industry")}
           label="Industry"
-          // value={formState.industry}
-          // onChange={handleChange}
+          value={formState.industry}
+          onChange={handleChange}
         >
           <MenuItem value="aaa">aaa</MenuItem>
           <MenuItem value="bbb">bbb</MenuItem>
