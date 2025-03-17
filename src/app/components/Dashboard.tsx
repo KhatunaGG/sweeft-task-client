@@ -1,9 +1,35 @@
-import React from 'react'
+"use client";
+import { useEffect } from "react";
+import { useAuthStore } from "../store/sign-in.store";
+import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  const router = useRouter();
+  const { accessToken, initialize, setAccessToken } = useAuthStore();
 
-export default Dashboard
+  useEffect(() => {
+    const checkAuth = async () => {
+      // await initialize(); 
+      const tokenFromCookies = await getCookie("accessToken") as string;
+
+      if (!tokenFromCookies) {
+        router.push("/sign-up"); 
+      } else {
+        setAccessToken(tokenFromCookies); 
+      }
+    };
+
+    checkAuth();
+  }, [initialize, setAccessToken, router]); 
+
+  if (!accessToken) {
+    return null; 
+  }
+
+  return (
+    <div className="w-full min-h-screen bg-green-400">Dashboard hiiiiiiiiii</div>
+  );
+};
+
+export default Dashboard;
