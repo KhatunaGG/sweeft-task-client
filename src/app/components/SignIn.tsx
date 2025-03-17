@@ -27,7 +27,6 @@
 //   const { verifyEmail, verificationStatus, login, isLoading, accessToken } =
 //     useAuthStore();
 
-
 //   const {
 //     register,
 //     reset,
@@ -52,8 +51,7 @@
 //         return;
 //       }
 //     }
-//   }, [searchParams, verifyEmail, router]);
-
+//   }, [searchParams]);
 
 //   useEffect(() => {
 //     if (verificationStatus?.success) {
@@ -62,10 +60,6 @@
 //       toast.error("Email verification failed. Please try again.");
 //     }
 //   }, [verificationStatus, reset]);
-
-
-
-
 
 //   useEffect(() => {
 //     if (accessToken) {
@@ -149,12 +143,10 @@
 
 // export default SignIn;
 
-
-
 "use client";
 import { Box, Button, FormControl, Typography } from "@mui/material";
 import Link from "next/link";
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import SignInEmailInput from "./SignInEmailInput";
 import SignInPasswordInput from "./SignInPasswordInput";
 import { useForm } from "react-hook-form";
@@ -174,12 +166,11 @@ export const SignInSchema = z.object({
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-const SignIn = () => {
+const SignInContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { verifyEmail, verificationStatus, login, isLoading, accessToken } =
     useAuthStore();
-
 
   const {
     register,
@@ -194,8 +185,23 @@ const SignIn = () => {
     },
   });
 
+  // useEffect(() => {
+  //   const token = searchParams.get("token");
+  //   console.log(token, 'token from searchParams')
+  //   if (token) {
+  //     verifyEmail(token);
+  //     if (verificationStatus?.success === true) {
+  //       router.push("/sign-in");
+  //       reset();
+  //     } else {
+  //       return;
+  //     }
+  //   }
+  // }, [searchParams, verifyEmail, router, reset, verificationStatus?.success]);
+
   useEffect(() => {
     const token = searchParams.get("token");
+    console.log(token, "token from searchParams");
     if (token) {
       verifyEmail(token);
       if (verificationStatus?.success === true) {
@@ -205,8 +211,7 @@ const SignIn = () => {
         return;
       }
     }
-  }, [searchParams, verifyEmail, router]);
-
+  }, [searchParams]);
 
   useEffect(() => {
     if (verificationStatus?.success) {
@@ -216,13 +221,8 @@ const SignIn = () => {
     }
   }, [verificationStatus, reset]);
 
-
-
-
-
   useEffect(() => {
     if (accessToken) {
-      // router.push("/dashboard");
       router.push("/");
     }
   }, [accessToken, router]);
@@ -243,9 +243,7 @@ const SignIn = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-
-    <section className=" flex items-center justify-center flex-col pb-6 w-[90%] md:max-w-[70%] lg:max-w-[40%]  rounded-xl shadow-[0px_0px_10px_#BEADFF]">
+    <section className="flex items-center justify-center flex-col pb-6 w-[90%] md:max-w-[70%] lg:max-w-[40%] rounded-xl shadow-[0px_0px_10px_#BEADFF]">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <Box
           sx={{
@@ -266,13 +264,13 @@ const SignIn = () => {
               borderBottom: "2px solidrgb(133, 122, 177)",
             }}
           >
-            sign Up
+            Sign In
           </Typography>
 
           <FormControl
             sx={{
               width: "100%",
-              display: "flax",
+              display: "flex",
               flexDirection: "column",
               gap: "30px",
             }}
@@ -292,14 +290,29 @@ const SignIn = () => {
           </Button>
         </Box>
       </form>
-      <div className="w-full  text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2">
-        <p className="text-[#737373] ">Don’t have an account?</p>
+      <div className="w-full text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2">
+        <p className="text-[#737373] ">Don&apos;t have an account?</p>
         <Link href={"/sign-up"}>
           <p className="text-[#633CFF] cursor-pointer">Create account</p>
         </Link>
       </div>
     </section>
-  </Suspense>
+  );
+};
+
+// Add fallback UI for the suspense boundary
+const LoadingFallback = () => (
+  <div className="w-full h-full flex items-center justify-center">
+    <p>Loading...</p>
+  </div>
+);
+
+// Main component that wraps the content with Suspense
+const SignIn = () => {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <SignInContent />
+    </Suspense>
   );
 };
 
