@@ -280,10 +280,10 @@ const SignInContent = () => {
           </FormControl>
 
           <Button
-            sx={{ width: "100%", paddingY: "12px" }}
+            sx={{ width: "100%", paddingY: "12px",  background: "#3A5B22", color: "white", borderRadius: "12px"}}
             type="submit"
             variant="contained"
-            color="primary"
+            // color="primary"
             disabled={isLoading || isSubmitting}
           >
             Sign in
@@ -293,7 +293,7 @@ const SignInContent = () => {
       <div className="w-full text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2">
         <p className="text-[#737373] ">Don&apos;t have an account?</p>
         <Link href={"/sign-up"}>
-          <p className="text-[#633CFF] cursor-pointer">Create account</p>
+          <p className="text-[#3A5B22] cursor-pointer">Create account</p>
         </Link>
       </div>
     </section>

@@ -86,10 +86,11 @@ const SignUp = () => {
   };
 
   return (
-    <section className=" flex items-center justify-center flex-col pb-6 w-[90%] md:max-w-[70%] lg:max-w-[40%]  rounded-xl shadow-[0px_0px_10px_#BEADFF]">
+    // <section className=" flex items-center justify-center flex-col pb-6 w-[90%] md:max-w-[70%] lg:max-w-[40%]  rounded-xl shadow-[0px_0px_10px_#BEADFF]">
+    <section className="w-[53.54%]  ">
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full"
+      className=""
     >
       <Box
         sx={{
@@ -106,11 +107,11 @@ const SignUp = () => {
           variant="h1"
           sx={{
             fontSize: "32px",
-            color: "#BEADFF",
+            color: "#000",
             borderBottom: "2px solidrgb(133, 122, 177)",
           }}
         >
-          sign Up
+          Get Started Now
         </Typography>
 
         <FormControl
@@ -129,10 +130,10 @@ const SignUp = () => {
         </FormControl>
 
         <Button
-          sx={{ width: "100%", paddingY: "12px" }}
+          sx={{ width: "100%", paddingY: "12px", background: "#3A5B22", color: "white", borderRadius: "12px" }}
           type="submit"
           variant="contained"
-          color="primary"
+          // color="primary"
           disabled={isLoading || isSubmitting}
         >
           Sign up
@@ -142,7 +143,7 @@ const SignUp = () => {
     <div className="w-full  text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2">
         <p className="text-[#737373] ">Already have an account? </p>
         <Link href={"/sign-in"}>
-          <p className="text-[#633CFF] cursor-pointer">Sign in</p>
+          <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
         </Link>
       </div>
     </section>
