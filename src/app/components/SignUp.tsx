@@ -9,8 +9,8 @@ import IndustryField from "./IndustryField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { logCompanyStore, useCompanyStore } from "../store/sign-up.store";
-import { toast } from "react-toastify";
+import {  useCompanyStore } from "../store/sign-up.store";
+import Link from "next/link";
 
 export type CompanyType = {
   name: string;
@@ -20,7 +20,7 @@ export type CompanyType = {
   industry: string;
 };
 
-const companySchema = z.object({
+export const companySchema = z.object({
   name: z.string().min(1, { message: "Company name is required" }),
   email: z.string().email().min(1, { message: "Email is required" }),
   password: z.string().min(1, { message: "Password is required" }),
@@ -33,7 +33,7 @@ const SignUp = () => {
     // formState,
     setFormState,
     createCompany,
-    axiosError,
+    // axiosError,
     success,
     isLoading,
   } = useCompanyStore();
@@ -78,17 +78,19 @@ const SignUp = () => {
       }
     } catch (e) {
       console.log(e);
-      if (axiosError) {
-        toast.error(axiosError);
-      }
+      // if (axiosError) {
+      //   toast.error(axiosError);
+      // }
     }
-    logCompanyStore();
+   
   };
 
   return (
+    // <section className=" flex items-center justify-center flex-col pb-6 w-[90%] md:max-w-[70%] lg:max-w-[40%]  rounded-xl shadow-[0px_0px_10px_#BEADFF]">
+    <section className="w-[53.54%]  ">
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-[90%] md:max-w-[70%] lg:max-w-[40%]  rounded-xl shadow-[0px_0px_10px_#BEADFF]"
+      className=""
     >
       <Box
         sx={{
@@ -105,11 +107,11 @@ const SignUp = () => {
           variant="h1"
           sx={{
             fontSize: "32px",
-            color: "#BEADFF",
+            color: "#000",
             borderBottom: "2px solidrgb(133, 122, 177)",
           }}
         >
-          sign Up
+          Get Started Now
         </Typography>
 
         <FormControl
@@ -128,16 +130,26 @@ const SignUp = () => {
         </FormControl>
 
         <Button
-          sx={{ width: "100%", paddingY: "12px" }}
+          sx={{ width: "100%", paddingY: "12px", background: "#3A5B22", color: "white", borderRadius: "12px" }}
           type="submit"
           variant="contained"
-          color="primary"
+          // color="primary"
           disabled={isLoading || isSubmitting}
         >
           Sign up
         </Button>
       </Box>
     </form>
+    <div className="w-full  text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2">
+        <p className="text-[#737373] ">Already have an account? </p>
+        <Link href={"/sign-in"}>
+          <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
+        </Link>
+      </div>
+    </section>
+
+
+
   );
 };
 

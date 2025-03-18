@@ -1,17 +1,19 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
-import { CompanyType } from "./SignUp";
+import { SignInType } from "./SignIn";
 
-export type PasswordFieldPropsType = {
-  register: UseFormRegister<CompanyType>;
+export type SignInPasswordInputPropsType = {
+  register: UseFormRegister<SignInType>;
   errors: {
     password?: FieldError;
   };
 };
 
-const PasswordField = ({ register, errors }: PasswordFieldPropsType) => {
-  // const {password, setField} = useCompanyStore()
+const SignInPasswordInput = ({
+  errors,
+  register,
+}: SignInPasswordInputPropsType) => {
   return (
     <div className="w-full relative">
       <TextField
@@ -30,10 +32,10 @@ const PasswordField = ({ register, errors }: PasswordFieldPropsType) => {
           bottom: "-18px",
         }}
       >
-         {errors.password?.message}
+        {errors.password?.message}
       </Typography>
     </div>
   );
 };
 
-export default PasswordField;
+export default SignInPasswordInput;

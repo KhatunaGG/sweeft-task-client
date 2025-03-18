@@ -1,7 +1,10 @@
-import React from 'react'
+import SignIn from "@/app/components/SignIn";
+import React from "react";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <div className="flex justify-center min-h-screen bg-white items-center">
+      <SignIn />
+    </div>
+  );
 }
