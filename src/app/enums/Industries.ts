@@ -20,7 +20,21 @@ export enum Industries {
   HOSPITALITY = "Hospitality",
 }
 
-export type Industry = "Finance" | "Healthcare" | "Technology" | "Retail" | "Manufacturing" | "Real Estate" | "Education" | "Hospitality";
+export type Industry =
+  | "Finance"
+  | "Healthcare"
+  | "Technology"
+  | "Retail"
+  | "Manufacturing"
+  | "Real Estate"
+  | "Education"
+  | "Hospitality";
+
+export enum ETier {
+  FREE = "free",
+  BASIC = "basic",
+  PREMIUM = "premium",
+}
 
 // // Example of using the enum in a component or function
 // import { Industries } from './src/enums/Industries';
