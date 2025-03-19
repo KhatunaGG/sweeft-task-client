@@ -2,14 +2,24 @@ import { deleteCookie, getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "../libs/axiosInstance";
-import { CompanyType } from "../components/SignUp";
 
 
+export interface ICompany {
+  name: string;
+  email: string;
+  country: string;
+  industry: string;
+  isVerified: boolean;
+  validationLink: string | null;
+  validationLinkValidateDate: string | null;
+  role: string;
+  subscriptionPlan: string;
+}
 
 const useAccessToken = () => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [company, setCompany] = useState<CompanyType | null>(null);
+  const [company, setCompany] = useState<ICompany | null>(null);
 
   const getCurranUser = async (accessToken: string | undefined) => {
     try {
@@ -37,7 +47,6 @@ const useAccessToken = () => {
       } else {
         setAccessToken(token as string);
       }
-
     };
 
     fetchToken();
@@ -49,7 +58,7 @@ const useAccessToken = () => {
     }
   }, [accessToken]);
 
-  return { accessToken,  company, logout, getCurranUser };
+  return { accessToken, company, logout, getCurranUser };
 };
 
 export default useAccessToken;

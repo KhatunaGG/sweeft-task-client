@@ -14,7 +14,7 @@ export interface ISignIn {
   verificationStatus: { success: boolean; message: string } | null;
   axiosError: string | null;
   isLoading: boolean;
-  accessToken: string;
+  accessToken: string | null;
   setAccessToken: (token: string) => void;
   setVerificationStatus: (status: {
     success: boolean;
@@ -26,17 +26,6 @@ export interface ISignIn {
   // initialize: () => Promise<void>;
   initialize: () => void;
 }
-
-// const handleApiError = (error: any) => {
-//   if (axios.isAxiosError(error)) {
-//     const errorMessage = error.response?.data.message || "An error occurred";
-//     toast.error(errorMessage);
-//     return errorMessage;
-//   }
-//   const unexpectedError = "An unexpected error occurred";
-//   toast.error(unexpectedError);
-//   return unexpectedError;
-// };
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   // Set type as AxiosError
@@ -55,9 +44,9 @@ export const useAuthStore = create<ISignIn>((set) => ({
   verificationStatus: null,
   axiosError: null,
   isLoading: false,
-  accessToken: "",
+  accessToken: null,
 
-  setAccessToken: (token) => set({ accessToken: token }),
+  setAccessToken: (token: string) => set({ accessToken: token }),
   setVerificationStatus: (status) =>
     set(() => ({ verificationStatus: status })),
   setEmail: (email) =>
@@ -110,7 +99,9 @@ export const useAuthStore = create<ISignIn>((set) => ({
     const token = await getCookie("accessToken") as string;
     if (token) {
       set({ accessToken: token });
-      return;
+
+    } else {
+      return
     }
   },
 

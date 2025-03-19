@@ -2,18 +2,17 @@ import Image from "next/image";
 
 const Aside = () => {
   return (
-    <div className='w-full  min-h-screen relative'>
+    <section className="w-full  min-h-screen relative">
       {/* <Image src={"/assets/img.png"} alt={""} fill /> */}
       <Image
         src="/assets/img.png"
-        alt="Image description" // Add a descriptive alt text
+        alt="Image description"
         fill
-        priority // This helps load the image as soon as possible (important for LCP)
-        sizes="(max-width: 768px) 100vw, 50vw" // Add sizes for responsive images (adjust based on layout)
+        priority
+        sizes="(max-width: 768px) 100vw, 50vw"
       />
+    </section>
+  );
+};
 
-    </div>
-  )
-}
-
-export default Aside
+export default Aside;
