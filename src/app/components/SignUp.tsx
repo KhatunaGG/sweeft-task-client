@@ -122,9 +122,11 @@ const SignUp = () => {
             gap: "30px",
           }}
         >
-          <NameField register={register} errors={errors} />
-          <EmailField register={register} errors={errors} />
-          <PasswordField register={register} errors={errors} />
+          {/* <NameField register={register} errors={errors} /> */} 
+          <NameField register={register} errors={errors} fieldName="name"/>
+          {/* <EmailField register={register} errors={errors} /> */}
+          <EmailField register={register} errors={errors} fieldName="email" />
+          <PasswordField register={register} errors={errors} fieldName="password" />
           <CountryField register={register} errors={errors} />
           <IndustryField register={register} errors={errors} />
         </FormControl>
