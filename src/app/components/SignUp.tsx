@@ -87,7 +87,7 @@ const SignUp = () => {
 
   return (
     // <section className=" flex items-center justify-center flex-col pb-6 w-[90%] md:max-w-[70%] lg:max-w-[40%]  rounded-xl shadow-[0px_0px_10px_#BEADFF]">
-    <section className="w-[53.54%]  ">
+    <section className="w-[55%] border border-[#eae6e6] shadow-xl rounded-2xl">
     <form
       onSubmit={handleSubmit(onSubmit)}
       className=""
@@ -100,7 +100,7 @@ const SignUp = () => {
           display: "flex",
           flexDirection: "column",
           gap: "40px",
-          paddingBottom: "40px",
+          paddingBottom: "15px",
         }}
       >
         <Typography
@@ -140,7 +140,7 @@ const SignUp = () => {
         </Button>
       </Box>
     </form>
-    <div className="w-full  text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2">
+    <div className="w-full  text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2 pb-6">
         <p className="text-[#737373] ">Already have an account? </p>
         <Link href={"/sign-in"}>
           <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
