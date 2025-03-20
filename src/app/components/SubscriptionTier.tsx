@@ -70,9 +70,11 @@ const SubscriptionTier = () => {
   const { handleSubscriptionUpdate } = useSubscriptionStor();
   const initialize = useAuthStore((state) => state.initialize);
   const accessToken = useAuthStore((state) => state.accessToken);
-  const { activeSubscription, setActiveSubscription  } =
+  const { activeSubscription, setActiveSubscription } =
     useSubscriptionStor();
   const { company } = useToken();
+
+
 
   // useEffect(() => {
   //   initialize();
