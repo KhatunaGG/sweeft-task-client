@@ -48,14 +48,13 @@
 
 "use client";
 import Image from "next/image";
-
 import useToken from "../hooks/use-token";
 import Info from "./Info";
 import SubscriptionTier from "./SubscriptionTier";
 import Profile from "./Profile";
 
 const Dashboard = () => {
-  const { accessToken } = useToken();
+  const { accessToken, company } = useToken();
 
   if (!accessToken) {
     return null;
@@ -66,7 +65,7 @@ const Dashboard = () => {
       <div className=" w-[25%]">
         <div className="relative max-w-[535px] min-h-screen overflow-hidden">
           <div className="absolute top-[50px] w-full  z-10  flex items-center justify-center">
-            <h1 className="font-bold text-2xl text-white">Company</h1>
+            <h1 className="font-bold text-2xl text-white">{company?.name}</h1>
           </div>
           {/* <div className="absolute inset-0 left-[-150px] w-full h-full bg-gradient-to-t from-gray-100 to-transparent z-10 opacity-60 backdrop-blur-xl rounded-r-4xl"></div> */}
           <div className="absolute inset-0  w-full h-full bg-gradient-to-t from-black-100 to-transparent -z-20 opacity-80 backdrop-blur-xl rounded-r-4xl"></div>
