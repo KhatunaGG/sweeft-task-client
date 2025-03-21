@@ -85,7 +85,6 @@ const ChangePassword = () => {
 
   return (
     <div className="UPLOAD-FILE flex flex-col gap-4 w-[33%] ">
-
       <button
         onClick={() => setOpen((prev) => !prev)}
         type="button"

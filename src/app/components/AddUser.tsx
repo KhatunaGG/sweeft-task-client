@@ -18,9 +18,10 @@ const AddUser = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { accessToken } = useAuthStore();
+
   const {
     register,
-    // reset,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValue>({
@@ -29,24 +30,23 @@ const AddUser = () => {
       userEmail: "",
     },
   });
+  
+
 
   const onsubmit = async (formState: FormValue) => {
-    console.log(formState, "formState");
     setIsLoading(true);
     if (Object.keys(errors).length > 0) {
       return;
     }
     try {
-      const res = await axiosInstance.post(
-        "user/verify-email", formState,
-        // {userEmail: formState.userEmail},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(res, "res")
+      const res = await axiosInstance.post("user", formState, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (res.status >= 200 || res.status <= 204) {
+        reset();
+      }
     } catch (e) {
       if (axios.isAxiosError(e)) {
         if (e.response) {
@@ -63,13 +63,14 @@ const AddUser = () => {
     }
   };
 
+
   return (
     <div className="UPLOAD-FILE flex flex-col gap-4 w-[33%]  ">
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="w-full flex items-center justify-between bg-white rounded-lg shadow-xl px-4  py-4"
       >
-        <h2 className="text-xl text-[#333] font-bold">Add User</h2>
+        <h2 className="text-xl text-[#333] font-bold text-left">Add User</h2>
         <p className="text-sm text-[#3A5B22] font-bold">Users(11)</p>
       </button>
 
@@ -81,7 +82,7 @@ const AddUser = () => {
       >
         <div>
           <label className="w-full text-[#9b9494] text-xs ">
-            Send verification email to user:
+            New user&apos;s email
           </label>
           <input
             {...register("userEmail")}
@@ -108,7 +109,7 @@ const AddUser = () => {
           type="submit"
           className="w-full bg-[#3A5B22] rounded-lg py-2 text-white font=bold"
         >
-          Submit
+          {isLoading || isSubmitting ? "Sending..." : "Send Verification Email"}
         </button>
       </form>
     </div>
