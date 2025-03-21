@@ -49,7 +49,6 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 
-
 export type PasswordFieldPropsType<T extends FieldValues> = {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
@@ -66,9 +65,9 @@ const PasswordField = <T extends FieldValues>({
     <div className="w-full relative">
       <TextField
         id={String(fieldName)}
-        label={String(fieldName)}
+        // label={String(fieldName)}
+        label={String(fieldName === "userPassword" ? "Password" : fieldName)}
         type="password"
-        // value={password}
         sx={{ width: "100%" }}
         {...register(fieldName)}
       />

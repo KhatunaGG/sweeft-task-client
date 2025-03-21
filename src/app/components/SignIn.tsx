@@ -301,14 +301,14 @@ const SignInContent = () => {
   );
 };
 
-// Add fallback UI for the suspense boundary
+
 const LoadingFallback = () => (
   <div className="w-full h-full flex items-center justify-center">
     <p>Loading...</p>
   </div>
 );
 
-// Main component that wraps the content with Suspense
+
 const SignIn = () => {
   return (
     <Suspense fallback={<LoadingFallback />}>

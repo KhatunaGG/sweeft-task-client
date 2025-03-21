@@ -70,12 +70,14 @@ const EmailField = <T extends FieldValues>({
   fieldName,
 }: EmailFieldPropsType<T>) => {
   const errorMessage = errors[fieldName]?.message;
+  
   return (
     <div className="w-full relative">
       <TextField
         id={String(fieldName)}
         // value={email}
-        label={String(fieldName)}
+        // label={String(fieldName)}
+        label={String(fieldName === "userEmail" ? "Email" : fieldName)} 
         sx={{ width: "100%" }}
         {...register(fieldName)}
       />
