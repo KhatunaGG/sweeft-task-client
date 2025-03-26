@@ -201,7 +201,6 @@ const SignInContent = () => {
 
   useEffect(() => {
     const token = searchParams.get("token");
-    console.log(token, "token from searchParams");
     if (token) {
       verifyEmail(token);
       if (verificationStatus?.success === true) {
@@ -228,7 +227,6 @@ const SignInContent = () => {
   }, [accessToken, router]);
 
   const onSubmit = async (data: SignInType) => {
-    console.log(data, "Sign in");
     if (Object.keys(errors).length > 0) {
       return;
     }

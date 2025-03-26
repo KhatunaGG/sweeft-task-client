@@ -3,8 +3,51 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "../libs/axiosInstance";
 
+// export interface ICompany {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   country: string;
+//   industry: string;
+//   isVerified: boolean;
+//   validationLink: string | null;
+//   validationLinkValidateDate: string | null;
+//   role: string;
+//   subscriptionPlan: string;
+// }
+
+// export interface IUser {
+//   _id: string;
+//   firstName: string;
+//   lastName: string;
+//   userEmail: string;
+//   role: string;
+//   companyId?: string;
+// }
+// // export type IUserOrCompany = ICompany | IUser
+
+// export interface IUserOrCompany {
+//   user: IUser;
+//   company: ICompany;
+// }
+
+export interface IUser {
+  _id: string;
+  userEmail: string;
+  companyId: string;
+  isVerified: boolean;
+  validationLink: string | null;
+  validationLinkValidateDate: string | null;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  firstName?: string;
+  lastName?: string;
+}
 
 export interface ICompany {
+  _id: string;
   name: string;
   email: string;
   country: string;
@@ -14,19 +57,27 @@ export interface ICompany {
   validationLinkValidateDate: string | null;
   role: string;
   subscriptionPlan: string;
+  uploadedFiles: string[];
+  user: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 const useAccessToken = () => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [company, setCompany] = useState<ICompany | null>(null);
+  // const [currentUser, setCurrentUser] = useState<IUserOrCompany | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   const getCurranUser = async (accessToken: string | undefined) => {
     try {
       const res = await axiosInstance.get("/auth/current-user", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      setCompany(res.data);
+      setUser(res.data.user);
+      setCompany(res.data.company);
     } catch (error) {
       console.log(error);
     }
@@ -58,7 +109,40 @@ const useAccessToken = () => {
     }
   }, [accessToken]);
 
-  return { accessToken, company, logout, getCurranUser };
+  return { accessToken, company, logout, getCurranUser, user };
 };
 
 export default useAccessToken;
+
+// const getCurranUser = async (accessToken: string | undefined) => {
+//   try {
+//     const res = await axiosInstance.get("/auth/current-user", {
+//       headers: { Authorization: `Bearer ${accessToken}` },
+//     });
+//     console.log(res.data, "RES>DATA")
+
+//     if (res.data.subscriptionPlan) {
+//       // If the data contains 'company', it's a user, so set both user and company data
+//       setCompany(res.data);
+//     } else {
+//       // If the data only contains 'company', it's a company, so set only company data
+//       setCurrentUser(res.data.user);
+//       setCompany(res.data.company);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// useEffect(() => {
+//   const fetchToken = async () => {
+//     const token = await getCookie("accessToken");
+//     if (!token) {
+//       router.push("/sign-up");
+//     } else {
+//       setAccessToken(token as string);
+//     }
+//   };
+
+//   fetchToken();
+// }, [router]);
