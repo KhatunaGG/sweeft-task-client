@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/sign-in.store";
 import { axiosInstance } from "../libs/axiosInstance";
+import { useUtilities } from "../store/utilities.store";
 
 const userEmailSendSchema = z.object({
   userEmail: z.string().email().min(1, "Email is requeued"),
@@ -18,6 +19,12 @@ const AddUser = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { accessToken } = useAuthStore();
+  const { usersLength, getAllUsers } = useUtilities();
+
+  useEffect(() => {
+    getAllUsers()
+  }, [accessToken])
+
 
   const {
     register,
@@ -34,6 +41,7 @@ const AddUser = () => {
 
 
   const onsubmit = async (formState: FormValue) => {
+    console.log(formState, "formState")
     setIsLoading(true);
     if (Object.keys(errors).length > 0) {
       return;
@@ -45,6 +53,7 @@ const AddUser = () => {
         },
       });
       if (res.status >= 200 || res.status <= 204) {
+        getAllUsers()
         reset();
       }
     } catch (e) {
@@ -71,7 +80,7 @@ const AddUser = () => {
         className="w-full flex items-center justify-between bg-white rounded-lg shadow-xl px-4  py-4"
       >
         <h2 className="text-xl text-[#333] font-bold text-left">Add User</h2>
-        <p className="text-sm text-[#3A5B22] font-bold">Users(11)</p>
+        <p className="text-sm text-[#3A5B22] font-bold">Users({usersLength})</p>
       </button>
 
       <form
