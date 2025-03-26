@@ -1,13 +1,10 @@
-import UserSignIn from '@/app/components/UserSignIn'
-import React from 'react'
+import UserSignIn from "@/app/components/UserSignIn";
+import React from "react";
 
-const page = () => {
+export default function page() {
   return (
     <div className="flex justify-center min-h-screen bg-white items-center">
-        <UserSignIn />
-
-  </div>
-  )
+      <UserSignIn />
+    </div>
+  );
 }
-
-export default page

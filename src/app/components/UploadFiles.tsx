@@ -20,8 +20,8 @@ const UploadFiles = () => {
   const [checked, setChecked] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<IFile | null>(null);
   // const [filePathFromAws, setFilePathFromAws] = useState("");
-  console.log(uploadedFile)
 
+  console.log(uploadedFile, "uploadedFile");
   useEffect(() => {
     getAllFiles();
   }, [accessToken]);
@@ -61,6 +61,7 @@ const UploadFiles = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("fileOwnerId", user ? user._id : company?._id || "");
+      formData.append("fileName", file.name || "");
       formData.append("userPermissions", JSON.stringify(selectedUsers));
 
       const res = await axiosInstance.post("/file/upload-file", formData, {
@@ -77,6 +78,7 @@ const UploadFiles = () => {
         getAllFiles();
         setOpen(false);
         setFile(undefined);
+        setChecked(null);
         toast.success("File uploaded successfully");
       } else {
         toast.error("File upload failed");
