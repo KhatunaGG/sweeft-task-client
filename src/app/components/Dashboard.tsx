@@ -16,10 +16,16 @@ const Dashboard = () => {
     <section className="w-full min-h-screen flex  items-start justify-center">
       <div className=" w-[25%]">
         <div className="relative max-w-[535px] min-h-screen overflow-hidden">
-          <div className="absolute top-[50px] w-full  z-10  flex items-center justify-center">
+          <div className="absolute top-[50px] w-full  z-10  flex flex-col items-center justify-center gap-2">
             <h1 className="font-bold text-2xl text-white">
               {company?.name || ""}
             </h1>
+            <h2 className="text-white">{company?.email}</h2>
+            <h2 className="text-white">
+              <span className="text-xs">Industry: </span>
+              {company?.industry}
+            </h2>
+            <h2 className="text-white">{company?.country}</h2>
           </div>
           <div className="absolute inset-0  w-full h-full bg-gradient-to-t from-black-100 to-transparent -z-20 opacity-80 backdrop-blur-xl rounded-r-4xl"></div>
           <Image

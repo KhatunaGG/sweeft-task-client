@@ -3,33 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "../libs/axiosInstance";
 
-// export interface ICompany {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   country: string;
-//   industry: string;
-//   isVerified: boolean;
-//   validationLink: string | null;
-//   validationLinkValidateDate: string | null;
-//   role: string;
-//   subscriptionPlan: string;
-// }
-
-// export interface IUser {
-//   _id: string;
-//   firstName: string;
-//   lastName: string;
-//   userEmail: string;
-//   role: string;
-//   companyId?: string;
-// }
-// // export type IUserOrCompany = ICompany | IUser
-
-// export interface IUserOrCompany {
-//   user: IUser;
-//   company: ICompany;
-// }
 
 export interface IUser {
   _id: string;
@@ -146,3 +119,33 @@ export default useAccessToken;
 
 //   fetchToken();
 // }, [router]);
+
+
+
+// export interface ICompany {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   country: string;
+//   industry: string;
+//   isVerified: boolean;
+//   validationLink: string | null;
+//   validationLinkValidateDate: string | null;
+//   role: string;
+//   subscriptionPlan: string;
+// }
+
+// export interface IUser {
+//   _id: string;
+//   firstName: string;
+//   lastName: string;
+//   userEmail: string;
+//   role: string;
+//   companyId?: string;
+// }
+// // export type IUserOrCompany = ICompany | IUser
+
+// export interface IUserOrCompany {
+//   user: IUser;
+//   company: ICompany;
+// }
