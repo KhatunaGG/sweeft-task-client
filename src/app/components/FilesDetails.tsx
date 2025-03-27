@@ -2,8 +2,7 @@
 import { useEffect } from "react";
 import { useUtilities } from "../store/utilities.store";
 import { useAuthStore } from "../store/sign-in.store";
-import { Pencil } from "lucide-react";
-
+import { Pencil, X } from "lucide-react";
 
 const FilesDetails = () => {
   const { allFiles, getAllFiles } = useUtilities();
@@ -19,6 +18,10 @@ const FilesDetails = () => {
     }
   }, [accessToken, getAllFiles]);
 
+  // const deleteFile = async (fileToDeleteId: string) => {
+
+  // }
+
   if (!accessToken) return null;
 
   return (
@@ -33,28 +36,21 @@ const FilesDetails = () => {
           <div>Loading files...</div>
         ) : (
           allFiles.map((file, i) => (
-
             <div key={i} className="w-full flex flex-col gap-6">
-
-              <div
-   
-                className="w-full py-3 px-1 border-b border-[#e2e0e0] text-xs font-bold cursor-pointer flex items-center justify-between"
-              >
+              <div className="w-full py-3 px-1 border-b border-[#e2e0e0] text-xs font-bold cursor-pointer flex items-center justify-between">
                 {file.fileName}
-                <Pencil className="w-4 h-6" />
+                <div className="flex items-center gap-6">
+                  <X
+                  // onClick={() => deleteFile(file._id)}
+                  className="w-4 h-4" />
+                  <Pencil className="w-3 h-5" />
+                </div>
               </div>
 
               <div className="w-full border-t border-[#e2e0e0] hidden">
                 {/* <UserPermissions /> */}
-
               </div>
-
-  
-
             </div>
-
-
-
           ))
         )}
       </div>

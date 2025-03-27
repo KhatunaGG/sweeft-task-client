@@ -41,8 +41,8 @@ const useAccessToken = () => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [company, setCompany] = useState<ICompany | null>(null);
-  // const [currentUser, setCurrentUser] = useState<IUserOrCompany | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
+  // const [currentUser, setCurrentUser] = useState<IUserOrCompany | null>(null);
 
   const getCurranUser = async (accessToken: string | undefined) => {
     try {
@@ -67,7 +67,8 @@ const useAccessToken = () => {
     const fetchToken = async () => {
       const token = await getCookie("accessToken");
       if (!token) {
-        router.push("/sign-up");
+        // router.push("/sign-up");
+        router.push("/sign-in");
       } else {
         setAccessToken(token as string);
       }
