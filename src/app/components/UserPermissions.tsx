@@ -59,13 +59,16 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import { IUser } from "../hooks/use-token";
-import { ChevronDown } from "lucide-react";
-
+import { ChevronDown, X } from "lucide-react";
+import { UseFilePermissionsStore } from "../store/file-permissions.store";
 
 export type UserPermissionsPropsType = {
   allUsers: IUser[];
-  // handleUserSelection: (userId: string, isChecked: boolean) => void;
-  handleUserSelection: (userId: string, email: string, isChecked: boolean) => void;
+  handleUserSelection: (
+    userId: string,
+    email: string,
+    isChecked: boolean
+  ) => void;
   setChecked: Dispatch<SetStateAction<string | null>>;
   checked: string | null;
 };
@@ -75,17 +78,11 @@ const UserPermissions = ({
   handleUserSelection,
   checked,
   setChecked,
-
 }: UserPermissionsPropsType) => {
-  // const [selectedByEmail, setSelectedByEmail] = useState<string[] | []>([])
-  // const [selectedItem, setSelectedItem] = useState<string | null>(null)
-  // const {selectedUsers } = UseFilePermissionsStore()
-
+  const { selectedUsers, showUsers, setShowUsers } = UseFilePermissionsStore();
 
   // const selectedUser = checked ? allUsers.find(user => user._id === checked) : null;
-// console.log(selectedUsers, "selectedUser")
-
-  
+  console.log(selectedUsers, "selectedUser")
 
   // console.log(checked, "checked")
   return (
@@ -97,17 +94,28 @@ const UserPermissions = ({
         Select Users to Share with (optional)
         <div className="w-full h-max rounded-lg relative">
           <input
-          defaultValue={"All"}
+            value={checked === null ? "All" : checked}
             type="text"
-            className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs bg-blue-300"
+            className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs "
+            readOnly
           />
-          <ChevronDown className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10" />
+          <div
+           onClick={() => setShowUsers(!showUsers)}
+          >
+            {showUsers ? (
+              <X className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10" />
+            ) : (
+              <ChevronDown className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10" />
+            )}
+          </div>
         </div>
       </label>
 
       <div
         id="userPermissions"
-        className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs max-h-[100px] overflow-y-scroll absolute -bottom-10 left-0 right-0  bg-green-200 z-10"
+        className={` ${
+          showUsers ? "flex" : "hidden"
+        } w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs max-h-[100px] overflow-y-scroll absolute -bottom-[50px] left-0 right-0 z-10 shadow-2xl bg-white flex-col gap-2`}
       >
         {allUsers.length > 0 &&
           allUsers.map((user, i) => (
