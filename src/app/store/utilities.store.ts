@@ -92,9 +92,6 @@
 //   },
 // }));
 
-
-
-
 import { create } from "zustand";
 import { IUser } from "../hooks/use-token";
 import { axiosInstance } from "../libs/axiosInstance";
@@ -106,7 +103,7 @@ export interface IFile {
   fileOwnerId: string;
   fileOwnerCompanyId: string;
   userPermissions: File[];
-  fileName: string
+  fileName: string;
 }
 
 export interface IUtilities {
@@ -127,17 +124,21 @@ export const useUtilities = create<IUtilities>((set) => ({
   filesLength: 0,
 
   setAllUsers: (allUsers: IUser[]) => {
-    set({ 
-      allUsers, 
-      usersLength: allUsers.length 
+    set({
+      allUsers,
+      usersLength: allUsers.length,
     });
   },
 
   setAllFiles: (allFiles: IFile[]) => {
-    set({ 
-      allFiles, 
-      filesLength: allFiles.length 
+    set({
+      allFiles,
+      filesLength: allFiles.length,
     });
+  },
+
+  setFilesLength: (length: number) => {
+    set({ filesLength: length });
   },
 
   getAllUsers: async () => {
@@ -153,9 +154,9 @@ export const useUtilities = create<IUtilities>((set) => ({
         },
       });
 
-      set({ 
-        allUsers: res.data, 
-        usersLength: res.data.length 
+      set({
+        allUsers: res.data,
+        usersLength: res.data.length,
       });
     } catch (e) {
       console.log(e);
@@ -175,10 +176,9 @@ export const useUtilities = create<IUtilities>((set) => ({
         },
       });
 
-      console.log("Fetched files:", res.data);
-      set({ 
-        allFiles: res.data, 
-        filesLength: res.data.length 
+      set({
+        allFiles: res.data,
+        filesLength: res.data.length,
       });
     } catch (e) {
       console.log(e);
