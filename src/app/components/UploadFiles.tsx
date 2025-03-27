@@ -226,9 +226,13 @@ const UploadFiles = () => {
     uploadFile,
     handleFileChange,
     handleUserSelection,
+    initializeState
+
   } = UseFilePermissionsStore();
+  console.log(open, "open")
 
   useEffect(() => {
+    initializeState()
     getAllFiles();
   }, [accessToken]);
 
@@ -250,6 +254,8 @@ const UploadFiles = () => {
       console.log(e);
     }
   };
+
+
 
   return (
     <div className="UPLOAD-FILE flex flex-col gap-4 w-[33%]">
