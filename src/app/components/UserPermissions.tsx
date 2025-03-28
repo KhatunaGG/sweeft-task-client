@@ -79,10 +79,10 @@ const UserPermissions = ({
   checked,
   setChecked,
 }: UserPermissionsPropsType) => {
-  const { selectedUsers, showUsers, setShowUsers } = UseFilePermissionsStore();
+  const { showUsers, setShowUsers } = UseFilePermissionsStore();
 
   // const selectedUser = checked ? allUsers.find(user => user._id === checked) : null;
-  console.log(selectedUsers, "selectedUser")
+  // console.log(selectedUsers, "selectedUser")
 
   // console.log(checked, "checked")
   return (

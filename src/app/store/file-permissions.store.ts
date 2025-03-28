@@ -335,6 +335,7 @@ import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { axiosInstance } from "../libs/axiosInstance";
 import { SetStateAction } from "react";
+import { useUtilities } from "./utilities.store";
 
 interface ErrorResponse {
   message: string;
@@ -458,6 +459,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
   },
   
   uploadFile: async () => {
+    const getAllFiles = useUtilities.getState().getAllFiles;
     const accessToken = useAuthStore.getState().accessToken;
     const user = useAuthStore.getState().user;
     const company = useAuthStore.getState().company;
@@ -482,6 +484,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
       });
 
       if (res.status >= 200 && res.status <= 204) {
+        getAllFiles();
         set({
           file: null,
           uploadedFile: res.data.uploadedFile,

@@ -55,6 +55,7 @@ const AddUser = () => {
       if (res.status >= 200 || res.status <= 204) {
         getAllUsers()
         reset();
+        setOpen(!open)
       }
     } catch (e) {
       if (axios.isAxiosError(e)) {

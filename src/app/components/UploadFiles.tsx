@@ -229,7 +229,7 @@ const UploadFiles = () => {
     initializeState
 
   } = UseFilePermissionsStore();
-  console.log(open, "open")
+
 
   useEffect(() => {
     initializeState()
