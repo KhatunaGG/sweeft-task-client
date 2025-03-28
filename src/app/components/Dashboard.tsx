@@ -18,7 +18,7 @@ const Dashboard = () => {
         <div className="relative max-w-[535px] min-h-screen overflow-hidden">
           <div className="absolute top-[50px] w-full  z-10  flex flex-col items-center justify-center gap-2">
             <h1 className="font-bold text-2xl text-white">
-              {company?.name || ""}
+              {(company?.name )?.toUpperCase() || ""}
             </h1>
             <h2 className="text-white">{company?.email}</h2>
             <h2 className="text-white">
