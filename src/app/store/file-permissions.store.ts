@@ -326,9 +326,6 @@
 //   },
 // }));
 
-
-
-
 import { create } from "zustand";
 import { useAuthStore } from "./sign-in.store";
 import { toast } from "react-toastify";
@@ -397,7 +394,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
   setOpen: (open: boolean) => {
     set({ open });
     if (typeof window !== "undefined") {
-      localStorage.setItem('open', JSON.stringify(open));
+      localStorage.setItem("open", JSON.stringify(open));
     }
   },
 
@@ -409,11 +406,11 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
       // const fileSize = file.size || 0;
       if (typeof window !== "undefined") {
         // localStorage.setItem('file', JSON.stringify({ name: fileName, type: fileType, size: fileSize }));
-        localStorage.setItem('file', JSON.stringify(file));
+        localStorage.setItem("file", JSON.stringify(file));
       }
     } else {
       if (typeof window !== "undefined") {
-        localStorage.removeItem('file');
+        localStorage.removeItem("file");
       }
     }
   },
@@ -422,9 +419,10 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
   setSelectedUsers: (selectedUsers) => set({ selectedUsers }),
   setChecked: (checked) => {
     set((state) => {
-      const newChecked = typeof checked === "function" ? checked(state.checked) : checked;
+      const newChecked =
+        typeof checked === "function" ? checked(state.checked) : checked;
       if (typeof window !== "undefined") {
-        localStorage.setItem('checked', JSON.stringify(newChecked)); 
+        localStorage.setItem("checked", JSON.stringify(newChecked));
       }
       return { checked: newChecked };
     });
@@ -435,7 +433,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
 
   handleUserSelection: (userId: string, email: string, isChecked: boolean) => {
     const { selectedUsers } = get();
-  
+
     if (isChecked) {
       set({
         selectedUsers: [
@@ -445,19 +443,23 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
       });
     } else {
       const index = selectedUsers.findIndex(
-        (user) => user.permissionById === userId && user.permissionByEmail === email
+        (user) =>
+          user.permissionById === userId && user.permissionByEmail === email
       );
       if (index !== -1) {
         const updatedSelectedUsers = [...selectedUsers];
-        updatedSelectedUsers.splice(index, 1); 
+        updatedSelectedUsers.splice(index, 1);
         set({ selectedUsers: updatedSelectedUsers });
       }
     }
     if (typeof window !== "undefined") {
-      localStorage.setItem('selectedUsers', JSON.stringify(get().selectedUsers));
+      localStorage.setItem(
+        "selectedUsers",
+        JSON.stringify(get().selectedUsers)
+      );
     }
   },
-  
+
   uploadFile: async () => {
     const getAllFiles = useUtilities.getState().getAllFiles;
     const accessToken = useAuthStore.getState().accessToken;
@@ -496,10 +498,10 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
         toast.success("File uploaded successfully");
 
         if (typeof window !== "undefined") {
-          localStorage.removeItem('selectedUsers');
-          localStorage.removeItem('checked');
-          localStorage.removeItem('open');
-          localStorage.removeItem('file');
+          localStorage.removeItem("selectedUsers");
+          localStorage.removeItem("checked");
+          localStorage.removeItem("open");
+          localStorage.removeItem("file");
         }
       } else {
         toast.error("File upload failed");
@@ -526,11 +528,11 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
 
   initializeState: () => {
     if (typeof window !== "undefined") {
-      const savedSelectedUsers = localStorage.getItem('selectedUsers');
-      const savedChecked = localStorage.getItem('checked');
-      const savedFile = localStorage.getItem('file');
-      const savedOpen = localStorage.getItem('open');
-  
+      const savedSelectedUsers = localStorage.getItem("selectedUsers");
+      const savedChecked = localStorage.getItem("checked");
+      const savedFile = localStorage.getItem("file");
+      const savedOpen = localStorage.getItem("open");
+
       if (savedSelectedUsers) {
         set({ selectedUsers: JSON.parse(savedSelectedUsers) });
       }
@@ -539,13 +541,11 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
       }
       if (savedFile) {
         const parsedFile = JSON.parse(savedFile);
-        set({ file: parsedFile }); 
+        set({ file: parsedFile });
       }
       if (savedOpen) {
         set({ open: JSON.parse(savedOpen) });
       }
     }
   },
-  
-  
 }));

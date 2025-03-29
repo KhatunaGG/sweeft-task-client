@@ -81,10 +81,6 @@ const UserPermissions = ({
 }: UserPermissionsPropsType) => {
   const { showUsers, setShowUsers } = UseFilePermissionsStore();
 
-  // const selectedUser = checked ? allUsers.find(user => user._id === checked) : null;
-  // console.log(selectedUsers, "selectedUser")
-
-  // console.log(checked, "checked")
   return (
     <div className="relative">
       <label
