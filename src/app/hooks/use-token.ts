@@ -56,6 +56,7 @@ const useAccessToken = () => {
     }
   };
 
+
   const logout = () => {
     deleteCookie("accessToken");
     setAccessToken(null);

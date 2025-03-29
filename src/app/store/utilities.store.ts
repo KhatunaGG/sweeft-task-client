@@ -102,7 +102,7 @@ export interface IFile {
   filePath: string;
   fileOwnerId: string;
   fileOwnerCompanyId: string;
-  userPermissions: File[];
+  userPermissions: string[];
   fileName: string;
 }
 
