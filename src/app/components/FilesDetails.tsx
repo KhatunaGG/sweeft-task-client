@@ -337,7 +337,10 @@ const FilesDetails = () => {
                       <div className="w-full h-max rounded-lg relative">
                         <input
                           type="text"
-                          className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs "
+                          className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs flex flex-col gap-1"
+                          value={selectedPermission
+                            ?.map((perm) => perm.permissionByEmail)
+                            .join(", ")}
                           readOnly
                         />
                       </div>

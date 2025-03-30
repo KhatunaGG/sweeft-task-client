@@ -80,6 +80,15 @@ const UserPermissions = ({
   setChecked,
 }: UserPermissionsPropsType) => {
   const { showUsers, setShowUsers } = UseFilePermissionsStore();
+  const selectedUsers = UseFilePermissionsStore.getState().selectedUsers;
+
+  const inputValue =
+    selectedUsers.length < 1
+      ? "All"
+      : checked
+      ? selectedUsers.find((user) => user.permissionById === checked)
+          ?.permissionByEmail
+      : "";
 
   return (
     <div className="relative">
@@ -90,14 +99,14 @@ const UserPermissions = ({
         Select Users to Share with (optional)
         <div className="w-full h-max rounded-lg relative">
           <input
-            value={checked === null ? "All" : checked}
+            // value={checked === null ? "All" : checked}
+            // value={checked ? selectedUsers.map(item => item.permissionByEmail) ? "All" : checked}
+            value={inputValue}
             type="text"
-            className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs "
+            className="w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs flex flex-col gap-1"
             readOnly
           />
-          <div
-           onClick={() => setShowUsers(!showUsers)}
-          >
+          <div onClick={() => setShowUsers(!showUsers)}>
             {showUsers ? (
               <X className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10" />
             ) : (
