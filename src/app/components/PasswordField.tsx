@@ -66,7 +66,15 @@ const PasswordField = <T extends FieldValues>({
       <TextField
         id={String(fieldName)}
         // label={String(fieldName)}
-        label={String(fieldName === "userPassword" ? "Password" : fieldName)}
+        label={String(
+          fieldName === "userPassword" 
+            ? "Password" 
+            : fieldName === "currentPassword" 
+            ? "Current Password" 
+            : fieldName === "newPassword" 
+            ? "New Password" 
+            : fieldName 
+        )}
         type="password"
         sx={{ width: "100%" }}
         {...register(fieldName)}

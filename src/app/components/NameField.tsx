@@ -72,7 +72,8 @@ const NameField = <T extends FieldValues>({ register, errors, fieldName }: NameF
       <TextField
         id={String(fieldName)} 
         // label={String(fieldName)} 
-        label={String(fieldName === "firstName" ? "Name" : fieldName)} 
+        // label={String(fieldName === "firstName" ? "Name" : fieldName)} 
+        label={String(fieldName === "firstName" || fieldName === "updateName" ? "Name" : fieldName)} 
         sx={{ width: "100%" }}
         {...register(fieldName)} 
       />

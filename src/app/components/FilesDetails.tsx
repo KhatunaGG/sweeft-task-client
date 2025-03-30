@@ -144,9 +144,6 @@ const FilesDetails = () => {
   const { allFiles, getAllFiles, allUsers, getAllUsers } = useUtilities();
   const { accessToken, initialize } = useAuthStore();
   const [selected, setSelected] = useState<string | null>(null);
-  // const [selectedPermission, setSelectedPermission] = useState<PermissionType[]>(
-  //   []
-  // );
   const [selectedPermission, setSelectedPermission] = useState<
     PermissionType[] | undefined
   >([]);
@@ -182,37 +179,16 @@ const FilesDetails = () => {
     }
   };
 
-  // const getSelectedPermission = (id: string) => {
-  //   const active = allFiles.find((item) => item._id === id);
-  //   if (active && active.userPermissions) {
-  //     const parsedPermissions = active.userPermissions
-  //       .map((permission: string) => {
-  //         try {
-  //           const parsed = JSON.parse(permission);
-  //           return parsed.length > 0 ? parsed : null;
-  //         } catch (error) {
-  //           console.error("Error parsing user permission", error);
-  //           return null;
-  //         }
-  //       })
-  //       .filter((permission) => permission !== null);
-  //     setSelectedPermission(parsedPermissions.flat() as PermissionType[]);
-  //   }
-  // };
-
   const getSelectedPermission = (id: string) => {
     const active = allFiles.find((item) => item._id === id);
     if (active && active.userPermissions) {
       const parsedPermissions = active.userPermissions
         .map((permission: string) => {
           try {
-            // Check if permission is a string before parsing
             const parsed =
               typeof permission === "string"
                 ? JSON.parse(permission)
                 : permission;
-
-            // Only return parsed permission if it's valid
             return parsed && parsed.length > 0 ? parsed : null;
           } catch (error) {
             console.error("Error parsing user permission", error);
@@ -263,7 +239,6 @@ const FilesDetails = () => {
           });
         }
       } else {
-        // Remove user permission if unchecked
         const index = updatedPermissions.findIndex(
           (permission) => permission.permissionById === permissionId
         );
@@ -275,7 +250,6 @@ const FilesDetails = () => {
       const res = await axiosInstance.patch(
         `/file/${selected}`,
         {
-          // userPermissions: JSON.stringify(updatedPermissions)
           userPermissions: updatedPermissions,
         },
         {
@@ -294,6 +268,7 @@ const FilesDetails = () => {
   };
 
   // const files = Array.isArray(allFiles) ? allFiles : [];
+  if (!accessToken) return;
 
   return (
     <div className="bg-white flex flex-col flex-1 min-h-screen p-6 border-[3px] border-[#3A5B22] rounded-lg gap-6">
