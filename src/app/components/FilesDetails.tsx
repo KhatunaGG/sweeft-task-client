@@ -134,6 +134,8 @@ import { useAuthStore } from "../store/sign-in.store";
 import { Pencil, X } from "lucide-react";
 import { axiosInstance } from "../libs/axiosInstance";
 import { toast } from "react-toastify";
+import axios from "axios";
+
 
 export type PermissionType = {
   permissionById: string;
@@ -142,13 +144,13 @@ export type PermissionType = {
 
 const FilesDetails = () => {
   const { allFiles, getAllFiles, allUsers, getAllUsers } = useUtilities();
-  const { accessToken, initialize } = useAuthStore();
+  const { accessToken, initialize  } = useAuthStore();
   const [selected, setSelected] = useState<string | null>(null);
   const [selectedPermission, setSelectedPermission] = useState<
     PermissionType[] | undefined
   >([]);
+ 
 
-  console.log(selected, "selected");
 
   useEffect(() => {
     initialize();
@@ -160,6 +162,7 @@ const FilesDetails = () => {
       getAllUsers();
     }
   }, [accessToken, getAllFiles, getAllUsers]);
+
 
   const deleteFile = async (id: string) => {
     if (!accessToken) return;
@@ -175,7 +178,16 @@ const FilesDetails = () => {
         getAllFiles();
       }
     } catch (e) {
-      console.log(e);
+      if (axios.isAxiosError(e)) {
+        if (e.response) {
+          const message = e.response.data?.message || "An error occurred";
+          toast.error(message);
+        } else {
+          toast.error("Network error. Please try again later.");
+        }
+      } else {
+        toast.error("Unexpected error occurred.");
+      }
     }
   };
 
@@ -200,8 +212,6 @@ const FilesDetails = () => {
       setSelectedPermission(parsedPermissions.flat() as PermissionType[]);
     }
   };
-
-  console.log(selectedPermission, "selectedPermission");
 
   useEffect(() => {
     if (selected) {
@@ -267,7 +277,7 @@ const FilesDetails = () => {
     }
   };
 
-  // const files = Array.isArray(allFiles) ? allFiles : [];
+  const safeAllFiles = Array.isArray(allFiles) ? allFiles : [];
   if (!accessToken) return;
 
   return (
@@ -280,7 +290,7 @@ const FilesDetails = () => {
         {allFiles.length === 0 ? (
           <div>No files found...</div>
         ) : (
-          allFiles.map((file, i) => (
+          safeAllFiles.map((file, i) => (
             <div key={i} className="w-full flex flex-col  ">
               <div className="w-full py-3 px-1 border-b border-[#e2e0e0] text-xs font-bold cursor-pointer flex flex-col gap-4 items-center justify-between ">
                 <div className="w-full flex items-center justify-between gap-6">
@@ -325,28 +335,36 @@ const FilesDetails = () => {
                       id="userPermissions"
                       className={` w-full border border-[#dddada] rounded-lg py-2.5 outline-none px-4 text-xs max-h-[100px] flex overflow-y-scroll  shadow-2xl bg-white flex-col gap-2`}
                     >
-                      {allUsers?.map((user) => {
-                        const hasPermission = selectedPermission?.some(
-                          (permission) => permission.permissionById === user._id
-                        );
-                        return (
-                          <label
-                            key={user._id}
-                            className="w-full flex items-center justify-center gap-4"
-                          >
-                            <input
-                              type="checkbox"
-                              name={user._id}
-                              id={user._id}
-                              checked={hasPermission}
-                              onChange={(e) =>
-                                handleCheckboxChange(user._id, e.target.checked)
-                              }
-                            />
-                            <p className="w-full text-xs">{user.userEmail}</p>
-                          </label>
-                        );
-                      })}
+                      {Array.isArray(allUsers) && allUsers.length > 0 ? (
+                        allUsers.map((user) => {
+                          const hasPermission = selectedPermission?.some(
+                            (permission) =>
+                              permission.permissionById === user._id
+                          );
+                          return (
+                            <label
+                              key={user._id}
+                              className="w-full flex items-center justify-center gap-4"
+                            >
+                              <input
+                                type="checkbox"
+                                name={user._id}
+                                id={user._id}
+                                checked={hasPermission}
+                                onChange={(e) =>
+                                  handleCheckboxChange(
+                                    user._id,
+                                    e.target.checked
+                                  )
+                                }
+                              />
+                              <p className="w-full text-xs">{user.userEmail}</p>
+                            </label>
+                          );
+                        })
+                      ) : (
+                        <div>No users available</div>
+                      )}
                     </div>
                   </div>
                 </div>
