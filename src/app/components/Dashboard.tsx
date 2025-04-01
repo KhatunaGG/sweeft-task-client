@@ -1,17 +1,28 @@
 "use client";
 import Image from "next/image";
-import useToken from "../hooks/use-token";
 import Info from "./Info";
 import SubscriptionTier from "./SubscriptionTier";
 import Profile from "./Profile";
+import { useEffect } from "react";
+import { useAuthStore } from "../store/sign-in.store";
 
 const Dashboard = () => {
-  const { accessToken, company } = useToken();
+  // const { accessToken, company,  } = useToken();
+  const {accessToken, initialize, company, user} =useAuthStore()
+
+  console.log(user, "user Dashboard")
+  console.log(company, "company Dashboard")
+
+    useEffect(() => {
+      initialize();
+    }, [initialize]);
+  
 
   if (!accessToken) {
     return null;
   }
 
+  
   return (
     <section className="w-full min-h-screen flex  items-start justify-center">
       <div className=" w-[25%]">

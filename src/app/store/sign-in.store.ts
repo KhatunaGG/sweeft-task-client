@@ -142,14 +142,19 @@ export interface ISignIn {
     message: string;
   }) => void;
   setEmail: (email: string) => void;
+  user: IUser | null;
+  company: ICompany | null;
+  
+  
+  setUser: (user: IUser | null) => void;
+  setCompany: (comapny: ICompany | null) => void;
+  
+
+  
   verifyEmail: (token: string) => void;
   login: (data: SignInType) => void;
   // initialize: () => Promise<void>;
   initialize: () => void;
-
-
-  user: IUser | null;
-  company: ICompany | null;
   getCurranUser: (accessToken: string | undefined) => void;
 }
 
@@ -181,6 +186,17 @@ export const useAuthStore = create<ISignIn>((set) => ({
     set((state) => ({
       signInFormState: { ...state.signInFormState, email },
     })),
+
+
+
+
+
+    setUser: (user: IUser | null) => set({ user }),
+    setCompany: (company: ICompany | null) => set({ company }),
+
+
+
+
 
 
   verifyEmail: async (token) => {
@@ -230,13 +246,20 @@ export const useAuthStore = create<ISignIn>((set) => ({
   },
 
   initialize: async () => {
+    // const user = useAuthStore.getState().user
+    // const company = useAuthStore.getState().company
     const token = await getCookie("accessToken") as string;
     if (token) {
       set({ accessToken: token });
       await useAuthStore.getState().getCurranUser(token);
     } else {
-      return
+      // return
+      window.location.href = "/sign-up";
     }
+
+// if(!user) {
+//   window.location.href = "/sign-up";
+// }
   },
 
 
