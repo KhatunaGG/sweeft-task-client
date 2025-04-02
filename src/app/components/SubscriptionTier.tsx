@@ -4,14 +4,13 @@ import { tierContext } from "../data/data";
 import { useAuthStore } from "../store/sign-in.store";
 import { useSubscriptionStor } from "../store/subscription.store";
 import { ETier } from "../enums/Industries";
-import useToken from "../hooks/use-token";
 
 const SubscriptionTier = () => {
   const { handleSubscriptionUpdate } = useSubscriptionStor();
   const initialize = useAuthStore((state) => state.initialize);
   const accessToken = useAuthStore((state) => state.accessToken);
   const { activeSubscription, setActiveSubscription } = useSubscriptionStor();
-  const { company } = useToken();
+  const { company } = useAuthStore();
 
   useEffect(() => {
     initialize();

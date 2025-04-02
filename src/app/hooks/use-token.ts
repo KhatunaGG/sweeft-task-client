@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "../libs/axiosInstance";
 
-
 export interface IUser {
   _id: string;
   userEmail: string;
@@ -56,12 +55,11 @@ const useAccessToken = () => {
     }
   };
 
-
   const logout = () => {
     deleteCookie("accessToken");
     setAccessToken(null);
     setCompany(null);
-    router.push("/");
+    router.push("/sign-up");
   };
 
   useEffect(() => {
@@ -88,66 +86,3 @@ const useAccessToken = () => {
 };
 
 export default useAccessToken;
-
-// const getCurranUser = async (accessToken: string | undefined) => {
-//   try {
-//     const res = await axiosInstance.get("/auth/current-user", {
-//       headers: { Authorization: `Bearer ${accessToken}` },
-//     });
-//     console.log(res.data, "RES>DATA")
-
-//     if (res.data.subscriptionPlan) {
-//       // If the data contains 'company', it's a user, so set both user and company data
-//       setCompany(res.data);
-//     } else {
-//       // If the data only contains 'company', it's a company, so set only company data
-//       setCurrentUser(res.data.user);
-//       setCompany(res.data.company);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// useEffect(() => {
-//   const fetchToken = async () => {
-//     const token = await getCookie("accessToken");
-//     if (!token) {
-//       router.push("/sign-up");
-//     } else {
-//       setAccessToken(token as string);
-//     }
-//   };
-
-//   fetchToken();
-// }, [router]);
-
-
-
-// export interface ICompany {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   country: string;
-//   industry: string;
-//   isVerified: boolean;
-//   validationLink: string | null;
-//   validationLinkValidateDate: string | null;
-//   role: string;
-//   subscriptionPlan: string;
-// }
-
-// export interface IUser {
-//   _id: string;
-//   firstName: string;
-//   lastName: string;
-//   userEmail: string;
-//   role: string;
-//   companyId?: string;
-// }
-// // export type IUserOrCompany = ICompany | IUser
-
-// export interface IUserOrCompany {
-//   user: IUser;
-//   company: ICompany;
-// }
