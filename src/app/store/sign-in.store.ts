@@ -114,21 +114,51 @@
 //   // },
 // }));
 
-
-
-
-
 import { create } from "zustand";
 import { SignInType } from "../components/SignIn";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
-import { getCookie, setCookie } from "cookies-next";
-import { ICompany, IUser } from "../hooks/use-token";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
+// import { ICompany, IUser } from "../hooks/use-token";
 
 interface ErrorResponse {
   message: string;
 }
+
+export interface IUser {
+  _id: string;
+  userEmail: string;
+  companyId: string;
+  isVerified: boolean;
+  validationLink: string | null;
+  validationLinkValidateDate: string | null;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  firstName?: string;
+  lastName?: string;
+}
+
+export interface ICompany {
+  _id: string;
+  name: string;
+  email: string;
+  country: string;
+  industry: string;
+  isVerified: boolean;
+  validationLink: string | null;
+  validationLinkValidateDate: string | null;
+  role: string;
+  subscriptionPlan: string;
+  uploadedFiles: string[];
+  user: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 
 export interface ISignIn {
   signInFormState: SignInType;
@@ -136,30 +166,28 @@ export interface ISignIn {
   axiosError: string | null;
   isLoading: boolean;
   accessToken: string | null;
+  user: IUser | null;
+  company: ICompany | null;
   setAccessToken: (token: string) => void;
   setVerificationStatus: (status: {
     success: boolean;
     message: string;
   }) => void;
   setEmail: (email: string) => void;
-  user: IUser | null;
-  company: ICompany | null;
-  
-  
   setUser: (user: IUser | null) => void;
   setCompany: (comapny: ICompany | null) => void;
-  
-
-  
   verifyEmail: (token: string) => void;
   login: (data: SignInType) => void;
   // initialize: () => Promise<void>;
   initialize: () => void;
   getCurranUser: (accessToken: string | undefined) => void;
+  // logout: () => void;
+
+
+  logout: () => Promise<void>; 
 }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
-  // Set type as AxiosError
   if (axios.isAxiosError(error)) {
     const errorMessage = error.response?.data.message || "An error occurred";
     toast.error(errorMessage);
@@ -187,17 +215,8 @@ export const useAuthStore = create<ISignIn>((set) => ({
       signInFormState: { ...state.signInFormState, email },
     })),
 
-
-
-
-
-    setUser: (user: IUser | null) => set({ user }),
-    setCompany: (company: ICompany | null) => set({ company }),
-
-
-
-
-
+  setUser: (user: IUser | null) => set({ user }),
+  setCompany: (company: ICompany | null) => set({ company }),
 
   verifyEmail: async (token) => {
     try {
@@ -248,34 +267,63 @@ export const useAuthStore = create<ISignIn>((set) => ({
   initialize: async () => {
     // const user = useAuthStore.getState().user
     // const company = useAuthStore.getState().company
-    const token = await getCookie("accessToken") as string;
+    const token = (await getCookie("accessToken")) as string;
+    console.log("Access token found:", token);
     if (token) {
       set({ accessToken: token });
       await useAuthStore.getState().getCurranUser(token);
     } else {
-      // return
-      window.location.href = "/sign-up";
+      return
+      // console.log("No access token found, redirecting to sign-up");
+      // window.location.href = "/sign-up";
     }
-
-// if(!user) {
-//   window.location.href = "/sign-up";
-// }
   },
 
-
-  getCurranUser: async (accessToken: string | undefined) =>  {
+  getCurranUser: async (accessToken: string | undefined) => {
     if (!accessToken) return;
     try {
       const res = await axiosInstance.get("/auth/current-user", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      set({user: res.data.user, company: res.data.company})
-
-    } catch(e) {
-      console.log(e);
-      set({ axiosError: "Failed to fetch current user" });
+      set({ user: res.data.user, company: res.data.company });
+    } catch (e) {
+      const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
+      set({ axiosError: errorMessage });
     }
-  }
+  },
+
+  // logout: () => {
+  //   deleteCookie("accessToken");
+  //   console.log("Access token deleted from cookies");
+  //   set({ user: null, company: null, accessToken: "" });
+  //   console.log("State reset complete");
+  //   window.location.href = "/sign-up";
+
+  // },
+
+
+
+  logout: async () => {
+    // First delete the cookie
+    deleteCookie("accessToken");
+    console.log("Access token deleted from cookies");
+    
+    // Clear state with proper syntax
+    await new Promise<void>((resolve) => {
+      set({ 
+        user: null, 
+        company: null, 
+        accessToken: null 
+      });
+      console.log("State reset complete");
+      resolve();
+    });
+    
+    // Redirect after state is updated
+    window.location.href = "/sign-up";
+  },
+
+
+
+
 }));
-
-

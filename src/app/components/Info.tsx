@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
-import useToken from "../hooks/use-token";
+import { useAuthStore } from "../store/sign-in.store";
+
 
 const Info = () => {
-  const { company, user } = useToken();
+  const { company, user, logout } = useAuthStore();
 
   return (
     <section className="INFO w-full px-2 py-2 grid grid-cols-4 border-[2px] border-[#3A5B22] rounded-lg gap-2">
@@ -44,7 +45,9 @@ const Info = () => {
         </button>
       </Link>
 
-      <button className="text-sm font-bold bg-[#3A5B22] rounded-lg text-white py-1 flex items-center justify-center cursor-pointer">
+      <button
+      onClick={() =>logout()}
+      className="text-sm font-bold bg-[#3A5B22] rounded-lg text-white py-1 flex items-center justify-center cursor-pointer">
         Log out
       </button>
     </section>

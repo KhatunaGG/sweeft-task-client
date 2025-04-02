@@ -493,6 +493,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
           selectedUsers: [],
           checked: null,
           open: false,
+          resStatus: res.status
         });
 
         toast.success("File uploaded successfully");
