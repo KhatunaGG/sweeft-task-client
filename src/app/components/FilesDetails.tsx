@@ -5,6 +5,7 @@ import { useAuthStore } from "../store/sign-in.store";
 import { Download, Pencil, X } from "lucide-react";
 import { useDetailsPageStore } from "../store/details.store";
 
+
 export type PermissionType = {
   permissionById: string;
   permissionByEmail: string;
@@ -55,7 +56,7 @@ const FilesDetails = () => {
   if (!accessToken) return null;
 
   return (
-    <div className="bg-white flex flex-col flex-1 min-h-screen p-6 border-[3px] border-[#3A5B22] rounded-lg gap-6">
+    <div className="bg-white flex flex-col flex-1 min-h-screen p-6 border-[3px] border-[#3A5B22] rounded-lg gap-6 relative">
       <div>
         <h1 className="font-bold text-2xl text-[#3A5B22]">All files</h1>
       </div>
@@ -154,6 +155,8 @@ const FilesDetails = () => {
           ))
         )}
       </div>
+
+      {/* <Pagination /> */}
     </div>
   );
 };
