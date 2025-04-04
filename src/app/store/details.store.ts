@@ -1,10 +1,9 @@
 import { create } from "zustand";
-import { useAuthStore } from "./sign-in.store";
+import { IUser, useAuthStore } from "./sign-in.store";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useUtilities } from "./utilities.store";
-
 
 export type PermissionType = {
   permissionById: string;
@@ -14,6 +13,12 @@ export type PermissionType = {
 interface ErrorResponse {
   message: string;
 }
+
+// interface FileDownloadResponse {
+//   data: Uint8Array | Buffer;
+//   contentType: string;
+//   fileName: string;
+// }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
@@ -30,10 +35,13 @@ export interface IDetailsPage {
   selected: string | null;
   selectedPermission: PermissionType[] | undefined;
   axiosError: string;
-
+  deletedUser: IUser | null;
+  isLoading: boolean;
+  setDeletedUser: (deletedUser: IUser | null) => void;
 
   resStatus: number;
   setResStatus: (resStatus: number) => void;
+  setIsLoading: (isLoading: boolean) => void;
 
   setSelected: (selected: string | null) => void;
   setSelectedPermission: (permission: PermissionType[] | undefined) => void;
@@ -41,25 +49,30 @@ export interface IDetailsPage {
   getSelectedPermission: (id: string) => void;
   updatePermissions: (permissionId: string, checked: boolean) => void;
   deleteFileUser: (id: string) => void;
+
+  handleDownload: (Id: string) => void;
 }
 
 export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
   selected: null,
   selectedPermission: undefined,
   axiosError: "",
+  deletedUser: null,
+  isLoading: false,
 
+  setIsLoading: (isLoading) => set({ isLoading }),
   resStatus: 0,
-  setResStatus: (resStatus) => set({resStatus}),
+  setResStatus: (resStatus) => set({ resStatus }),
+
+  setDeletedUser: (deletedUser) => set({ deletedUser }),
 
   setSelected: (selected: string | null) => set({ selected }),
   setSelectedPermission: (permissions: PermissionType[] | undefined) =>
     set({ selectedPermission: permissions }),
 
   deleteFile: async (id: string) => {
-    const { accessToken } =
-      useAuthStore.getState();
-    const { getAllFiles } =
-      useUtilities.getState();
+    const { accessToken } = useAuthStore.getState();
+    const { getAllFiles } = useUtilities.getState();
     if (!accessToken) return;
     try {
       const res = await axiosInstance.delete(`file/${id}`, {
@@ -79,8 +92,7 @@ export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
   },
 
   getSelectedPermission: (id: string) => {
-    const { allFiles } =
-      useUtilities.getState();
+    const { allFiles } = useUtilities.getState();
     const active = allFiles.find((item) => item._id === id);
     if (active && active.userPermissions) {
       const parsedPermissions = active.userPermissions
@@ -150,25 +162,14 @@ export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
   },
 
   deleteFileUser: async (id: string) => {
-    const { accessToken, user, logout } = useAuthStore.getState();
-    const isSelfDeletion = user?._id === id;
-    console.log(id, "id from store")
-
+    const { accessToken } = useAuthStore.getState();
     try {
       const res = await axiosInstance.delete(`/user/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
       if (res.status >= 200 && res.status <= 204) {
-        set({resStatus: res.status})
-        if (isSelfDeletion) {
-          await logout();
-          window.location.href = "/sign-up";
-          return;
-        }
-
         useUtilities.getState().getAllFiles();
         useUtilities.getState().getAllUsers();
         toast.success("User deleted successfully.");
@@ -176,6 +177,59 @@ export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
     } catch (e) {
       const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
       set({ axiosError: errorMessage });
+    }
+  },
+
+  handleDownload: async (id: string) => {
+    const { accessToken } = useAuthStore.getState();
+    const state = get();
+    if (!accessToken) {
+      toast.error("Authentication required");
+      return;
+    }
+    try {
+      state.setIsLoading(true);
+      const metadataResponse = await axiosInstance.get(`/file/metadata/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const { fileName, fileExtension } = metadataResponse.data;
+
+      const response = await axiosInstance.get(`/file/download-file/${id}`, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const contentType =
+        response.headers["content-type"] || "application/octet-stream";
+
+      let downloadFileName = fileName;
+      if (
+        fileExtension &&
+        !fileName.toLowerCase().endsWith(`.${fileExtension.toLowerCase()}`)
+      ) {
+        downloadFileName = `${fileName}.${fileExtension}`;
+      }
+      const blob = new Blob([response.data], { type: contentType });
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = downloadFileName;
+      document.body.appendChild(a);
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      toast.success("File downloaded successfully");
+    } catch (error) {
+      console.error("Download error:", error);
+      toast.error("Failed to download file");
+    } finally {
+      state.setIsLoading(false);
     }
   },
 }));
