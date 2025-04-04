@@ -159,7 +159,6 @@ export interface ICompany {
   __v: number;
 }
 
-
 export interface ISignIn {
   signInFormState: SignInType;
   verificationStatus: { success: boolean; message: string } | null;
@@ -181,10 +180,7 @@ export interface ISignIn {
   // initialize: () => Promise<void>;
   initialize: () => void;
   getCurranUser: (accessToken: string | undefined) => void;
-  // logout: () => void;
-
-
-  logout: () => Promise<void>; 
+  logout: () => void;
 }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
@@ -268,14 +264,13 @@ export const useAuthStore = create<ISignIn>((set) => ({
     // const user = useAuthStore.getState().user
     // const company = useAuthStore.getState().company
     const token = (await getCookie("accessToken")) as string;
-    console.log("Access token found:", token);
     if (token) {
       set({ accessToken: token });
       await useAuthStore.getState().getCurranUser(token);
     } else {
-      return
-      // console.log("No access token found, redirecting to sign-up");
-      // window.location.href = "/sign-up";
+      // return
+
+      window.location.href = "/sign-up";
     }
   },
 
@@ -292,38 +287,15 @@ export const useAuthStore = create<ISignIn>((set) => ({
     }
   },
 
-  // logout: () => {
-  //   deleteCookie("accessToken");
-  //   console.log("Access token deleted from cookies");
-  //   set({ user: null, company: null, accessToken: "" });
-  //   console.log("State reset complete");
-  //   window.location.href = "/sign-up";
-
-  // },
-
-
-
-  logout: async () => {
-    // First delete the cookie
+  logout: () => {
     deleteCookie("accessToken");
     console.log("Access token deleted from cookies");
-    
-    // Clear state with proper syntax
-    await new Promise<void>((resolve) => {
-      set({ 
-        user: null, 
-        company: null, 
-        accessToken: null 
-      });
-      console.log("State reset complete");
-      resolve();
-    });
-    
-    // Redirect after state is updated
+    set({ user: null, company: null, accessToken: "" });
+    console.log("State reset complete");
     window.location.href = "/sign-up";
   },
 
 
 
-
 }));
+
