@@ -174,7 +174,7 @@ export interface ISignIn {
   }) => void;
   setEmail: (email: string) => void;
   setUser: (user: IUser | null) => void;
-  setCompany: (comapny: ICompany | null) => void;
+  setCompany: (company: ICompany | null) => void;
   verifyEmail: (token: string) => void;
   login: (data: SignInType) => void;
   // initialize: () => Promise<void>;
