@@ -21,10 +21,8 @@ const UploadFiles = () => {
     handleUserSelection,
     initializeState,
     resStatus,
-    extension
   } = UseFilePermissionsStore();
 
-  console.log(extension, "extension")
 
   useEffect(() => {
     initializeState();
