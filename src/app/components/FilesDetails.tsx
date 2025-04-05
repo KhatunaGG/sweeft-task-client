@@ -2,9 +2,10 @@
 import { useEffect } from "react";
 import { useUtilities } from "../store/utilities.store";
 import { useAuthStore } from "../store/sign-in.store";
-import { Download, Pencil, X } from "lucide-react";
+import { Download, MoveLeft, Pencil, X } from "lucide-react";
 import { useDetailsPageStore } from "../store/details.store";
 import Pagination from "./Pagination";
+import Link from "next/link";
 
 export type PermissionType = {
   permissionById: string;
@@ -17,10 +18,9 @@ const FilesDetails = () => {
     getAllFiles,
     allUsers,
     getAllUsers,
-    page,
-    take,
-    setPage,
-    setTake,
+    filesPage,
+    filesTake,
+    setFilesPage,
     filesLength,
   } = useUtilities();
   const { accessToken, initialize } = useAuthStore();
@@ -34,7 +34,6 @@ const FilesDetails = () => {
     handleDownload,
   } = useDetailsPageStore();
 
-
   useEffect(() => {
     initialize();
   }, [initialize]);
@@ -44,7 +43,7 @@ const FilesDetails = () => {
       getAllFiles();
       getAllUsers();
     }
-  }, [accessToken, getAllFiles, getAllUsers, page, take]);
+  }, [accessToken, getAllFiles, getAllUsers, filesPage, filesTake]);
 
   useEffect(() => {
     if (selected) {
@@ -63,18 +62,21 @@ const FilesDetails = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+    setFilesPage(newPage);
   };
 
-  const handleItemsPerPage = (newTake: number) => {
-    setTake(newTake);
-  };
+  // const handleItemsPerPage = (newTake: number) => {
+  //   setFilesTake(newTake);
+  // };
 
   const safeAllFiles = Array.isArray(allFiles) ? allFiles : [];
   if (!accessToken) return null;
 
   return (
     <div className="bg-white flex flex-col flex-1 min-h-screen p-6 border-[3px] border-[#3A5B22] rounded-lg gap-6 relative">
+      <Link href={"/"}>
+        <MoveLeft className="text-[#3A5B22]" />
+      </Link>
       <div>
         <h1 className="font-bold text-2xl text-[#3A5B22]">All files</h1>
       </div>
@@ -178,12 +180,11 @@ const FilesDetails = () => {
       </div>
 
       <Pagination
-        currentPage={page}
-        totalFilesCount={allFiles.length}
+        currentPage={filesPage}
         onPageChange={handlePageChange}
-        totalPages={Math.ceil(filesLength / take)}
-        onItemsPerPage={handleItemsPerPage}
-        take={take}
+        totalPages={Math.ceil(filesLength / filesTake)}
+        // onItemsPerPage={handleItemsPerPage}
+        // take={filesTake}
       />
     </div>
   );
