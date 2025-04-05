@@ -4,7 +4,7 @@ import { useUtilities } from "../store/utilities.store";
 import { useAuthStore } from "../store/sign-in.store";
 import { Download, Pencil, X } from "lucide-react";
 import { useDetailsPageStore } from "../store/details.store";
-
+import Pagination from "./Pagination";
 
 export type PermissionType = {
   permissionById: string;
@@ -12,7 +12,17 @@ export type PermissionType = {
 };
 
 const FilesDetails = () => {
-  const { allFiles, getAllFiles, allUsers, getAllUsers } = useUtilities();
+  const {
+    allFiles,
+    getAllFiles,
+    allUsers,
+    getAllUsers,
+    page,
+    take,
+    setPage,
+    setTake,
+    filesLength,
+  } = useUtilities();
   const { accessToken, initialize } = useAuthStore();
   const {
     getSelectedPermission,
@@ -21,8 +31,9 @@ const FilesDetails = () => {
     selectedPermission,
     selected,
     setSelected,
-    handleDownload
+    handleDownload,
   } = useDetailsPageStore();
+
 
   useEffect(() => {
     initialize();
@@ -33,7 +44,7 @@ const FilesDetails = () => {
       getAllFiles();
       getAllUsers();
     }
-  }, [accessToken, getAllFiles, getAllUsers]);
+  }, [accessToken, getAllFiles, getAllUsers, page, take]);
 
   useEffect(() => {
     if (selected) {
@@ -51,6 +62,13 @@ const FilesDetails = () => {
     getSelectedPermission(id);
   };
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleItemsPerPage = (newTake: number) => {
+    setTake(newTake);
+  };
 
   const safeAllFiles = Array.isArray(allFiles) ? allFiles : [];
   if (!accessToken) return null;
@@ -68,7 +86,7 @@ const FilesDetails = () => {
           safeAllFiles.map((file, i) => (
             <div key={i} className="w-full flex flex-col  ">
               <div className="w-full py-3 px-1 border-b border-[#e2e0e0] text-xs font-bold cursor-pointer flex flex-col gap-4 items-center justify-between ">
-                <div className="w-full flex items-center justify-between gap-6">
+                <div className="w-full flex items-center justify-between gap-8">
                   <h2> {file.fileName}</h2>
                   <div className="flex items-center gap-4">
                     <X
@@ -80,8 +98,9 @@ const FilesDetails = () => {
                       className="w-3 h-5"
                     />
                     <Download
-                    onClick={() => handleDownload(file._id)}
-                    className="w-4 h-4" />
+                      onClick={() => handleDownload(file._id)}
+                      className="w-4 h-4"
+                    />
                   </div>
                 </div>
 
@@ -107,7 +126,7 @@ const FilesDetails = () => {
                                   .map((perm) => perm.permissionByEmail)
                                   .join(", ")
                               : ""
-                          } 
+                          }
                           readOnly
                         />
                       </div>
@@ -120,9 +139,11 @@ const FilesDetails = () => {
                       {Array.isArray(allUsers) && allUsers.length > 0 ? (
                         allUsers.map((user) => {
                           if (!user || !user._id) return null;
-                          const hasPermission = selectedPermission?.some(
-                            (permission) => permission.permissionById === user._id
-                          ) || false;
+                          const hasPermission =
+                            selectedPermission?.some(
+                              (permission) =>
+                                permission.permissionById === user._id
+                            ) || false;
                           return (
                             <label
                               key={user._id}
@@ -156,7 +177,14 @@ const FilesDetails = () => {
         )}
       </div>
 
-      {/* <Pagination /> */}
+      <Pagination
+        currentPage={page}
+        totalFilesCount={allFiles.length}
+        onPageChange={handlePageChange}
+        totalPages={Math.ceil(filesLength / take)}
+        onItemsPerPage={handleItemsPerPage}
+        take={take}
+      />
     </div>
   );
 };

@@ -21,7 +21,6 @@ const UploadFiles = () => {
     handleUserSelection,
     initializeState,
     resStatus,
-
     extension
   } = UseFilePermissionsStore();
 
