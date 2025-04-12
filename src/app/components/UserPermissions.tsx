@@ -101,9 +101,10 @@
 
 "use client";
 import { Dispatch, SetStateAction } from "react";
-import { IUser } from "../hooks/use-token";
+// import { IUser } from "../hooks/use-token";
 import { ChevronDown, X } from "lucide-react";
 import { UseFilePermissionsStore } from "../store/file-permissions.store";
+import { IUser } from "../store/utilities.store";
 
 export type UserPermissionsPropsType = {
   allUsers: IUser[];

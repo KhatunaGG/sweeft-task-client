@@ -56,7 +56,7 @@ const AddUser = () => {
         getAllUsers()
         reset();
         setOpen(!open)
-      }
+      } 
     } catch (e) {
       if (axios.isAxiosError(e)) {
         if (e.response) {
@@ -70,6 +70,8 @@ const AddUser = () => {
       }
     } finally {
       setIsLoading(false);
+      reset();
+      setOpen(!open)
     }
   };
 
