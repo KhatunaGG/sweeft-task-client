@@ -169,8 +169,12 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
           open: false,
           resStatus: res.status,
         });
-
+        
+        
         toast.success("File uploaded successfully");
+        if (accessToken) {
+          await useAuthStore.getState().getCurranUser(accessToken);
+        }
 
         if (typeof window !== "undefined") {
           localStorage.removeItem("selectedUsers");
@@ -187,7 +191,11 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
         axiosError: errorMessage,
         file: undefined,
       });
+      localStorage.removeItem("open");
       toast.error(errorMessage);
+    } finally {
+      set({open: false})
+      localStorage.removeItem("open");
     }
   },
 

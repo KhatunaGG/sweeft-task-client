@@ -53,6 +53,7 @@
 import { SquareArrowLeft, SquareArrowRight } from "lucide-react";
 import React from "react";
 
+
 export type PaginationPropsType = {
   currentPage: number;
   onPageChange: (page: number) => void;
@@ -64,7 +65,8 @@ const Pagination = ({
   onPageChange,
   totalPages,
 }: PaginationPropsType) => {
-  // Determine the pagination buttons based on totalPages
+
+
   const getPaginationButtons = () => {
     if (totalPages <= 3) {
       // If total pages are 3 or less, show all pages

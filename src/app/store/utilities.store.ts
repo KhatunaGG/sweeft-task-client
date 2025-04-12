@@ -144,11 +144,52 @@
 
 
 import { create } from "zustand";
-import { IUser } from "../hooks/use-token";
+// import { IUser } from "../hooks/use-token";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useAuthStore } from "./sign-in.store";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+
+export interface IUser {
+  _id: string;
+  userEmail: string;
+  companyId: string;
+  isVerified: boolean;
+  validationLink: string | null;
+  validationLinkValidateDate: string | null;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  firstName?: string;
+  lastName?: string;
+}
+
+export interface ICompany {
+  _id: string;
+  name: string;
+  email: string;
+  country: string;
+  industry: string;
+  isVerified: boolean;
+  validationLink: string | null;
+  validationLinkValidateDate: string | null;
+  role: string;
+  subscriptionPlan: string;
+  uploadedFiles: string[];
+  user: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+ 
+  
+
+premiumCharge: number;
+extraUserCharge: number;
+extraFileCharge: number
+
+}
+
 
 export interface IFile {
   _id: string;

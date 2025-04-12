@@ -2,17 +2,21 @@
 import Link from "next/link";
 import { useAuthStore } from "../store/sign-in.store";
 
-
 const Info = () => {
   const { company, user, logout } = useAuthStore();
+
 
   return (
     <section className="INFO w-full px-2 py-2 grid grid-cols-4 border-[2px] border-[#3A5B22] rounded-lg gap-2">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[#9b9494] text-xs">Company Email</p>
+          <p className="text-[#9b9494] text-xs"> Extra Charges:</p>
           <p className="text-[#333333] text-sm font-bold">
-            {company?.email || ""}
+            {`$ ${(
+              (company?.extraFileCharge || 0) +
+              (company?.extraUserCharge || 0) +
+              (company?.premiumCharge || 0)
+            ).toFixed(2)}`}
           </p>
         </div>
         <div className="h-full w-[2px] bg-[#3A5B22]"></div>
@@ -46,8 +50,9 @@ const Info = () => {
       </Link>
 
       <button
-      onClick={() =>logout()}
-      className="text-sm font-bold bg-[#3A5B22] rounded-lg text-white py-1 flex items-center justify-center cursor-pointer">
+        onClick={() => logout()}
+        className="text-sm font-bold bg-[#3A5B22] rounded-lg text-white py-1 flex items-center justify-center cursor-pointer"
+      >
         Log out
       </button>
     </section>

@@ -24,6 +24,8 @@ const UploadFiles = () => {
   } = UseFilePermissionsStore();
 
 
+
+
   useEffect(() => {
     initializeState();
     getAllFiles();
@@ -48,6 +50,11 @@ const UploadFiles = () => {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setOpen(false)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
   

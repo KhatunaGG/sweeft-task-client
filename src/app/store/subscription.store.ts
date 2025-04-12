@@ -4,6 +4,7 @@ import { axiosInstance } from "../libs/axiosInstance";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
+
 export interface ISubscriptionStor {
   subscriptionPlan: ETier;
   activeSubscription: ETier;
@@ -34,7 +35,7 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   return unexpectedError;
 };
 
-export const useSubscriptionStor = create<ISubscriptionStor>((set) => ({
+export const useSubscriptionStore = create<ISubscriptionStor>((set) => ({
   subscriptionPlan: ETier.FREE,
   activeSubscription: ETier.FREE,
   axiosError: null,
@@ -65,21 +66,21 @@ export const useSubscriptionStor = create<ISubscriptionStor>((set) => ({
         }
       );
 
-      // set({
-      //   verificationStatus: { resStatus: res.status, message: "Subscription updated successfully!" },
-      // });
-
       if (res.status >= 200 && res.status <= 204) {
+
         set({
           verificationStatus: {
             resStatus: res.status,
             message: "Subscription updated successfully!",
           },
+          activeSubscription: subscriptionPlan,
         });
+     
       }
     } catch (e) {
       const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
       set({ axiosError: errorMessage });
-    }
+
+    } 
   },
 }));

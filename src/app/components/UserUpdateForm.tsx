@@ -2,10 +2,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { IUser } from "../hooks/use-token";
 import { useCallback, useEffect } from "react";
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
+import { IUser } from "../store/utilities.store";
 
 export const userUpdateSchema = z
   .object({

@@ -45,6 +45,9 @@ const FilesDetails = () => {
     }
   }, [accessToken, getAllFiles, getAllUsers, filesPage, filesTake]);
 
+
+
+
   useEffect(() => {
     if (selected) {
       getSelectedPermission(selected);
@@ -82,7 +85,7 @@ const FilesDetails = () => {
       </div>
 
       <div className="w-full flex flex-col items-start">
-        {allFiles.length === 0 ? (
+        {allFiles && allFiles.length === 0 ? (
           <div>No files found...</div>
         ) : (
           safeAllFiles.map((file, i) => (

@@ -7,14 +7,14 @@ export const tierContext = [
   },
   {
     type: ETier.BASIC,
-    text: `The Basic tier allows up to 10 users, with the ability to upload up to
-              100 files per month. If additional users are added beyond the 10-user
+    text: `The Basic tier allows up to 5 users, with the ability to upload up to
+              10 files per month. If additional users are added beyond the 10-user
               limit, an extra $5 will be charged per user`,
   },
   {
     type: ETier.PREMIUM,
-    text: `The Premium tier offers up to 1000 file uploads per month with a fixed
-              cost of $300. It includes unlimited users. However, if more than 1000
+    text: `The Premium tier offers up to 20 file uploads per month with a fixed
+              cost of $300. It includes unlimited users. However, if more than 20
               files are uploaded in a month, an additional $0.50 will be charged per
               extra file.`,
   },
