@@ -2,14 +2,15 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
-import { UserSignInType } from "./UserSignIn";
+// import { UserSignInType } from "./UserSignIn";
+import { LastNamePropsType } from "../interface";
 
-export type LastNamePropsType = {
-  register: UseFormRegister<UserSignInType>;
-  errors: {
-    lastName?: FieldError;
-  };
-};
+// export type LastNamePropsType = {
+//   register: UseFormRegister<UserSignInType>;
+//   errors: {
+//     lastName?: FieldError;
+//   };
+// };
 
 const LastNameField = ({ register, errors }: LastNamePropsType) => {
   return (
@@ -30,17 +31,6 @@ const LastNameField = ({ register, errors }: LastNamePropsType) => {
       >
         {errors.lastName?.message}
       </Typography>
-
-      {/* <Typography
-        sx={{
-          fontSize: "12px",
-          color: "red",
-          position: "absolute",
-          bottom: "-18px",
-        }}
-      >
-        error massage
-      </Typography> */}
     </div>
   );
 };

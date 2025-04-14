@@ -9,16 +9,17 @@ import {
 } from "@mui/material";
 import React from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
-import { CompanyType } from "./SignUp";
+// import { CompanyType } from "./SignUp";
 import { useCompanyStore } from "../store/sign-up.store";
 import { Industries } from "../enums/Industries";
+import { CompanyType, IndustryFieldPropsType } from "../interface";
 
-export type IndustryFieldPropsType = {
-  register: UseFormRegister<CompanyType>;
-  errors: {
-    industry?: FieldError;
-  };
-};
+// export type IndustryFieldPropsType = {
+//   register: UseFormRegister<CompanyType>;
+//   errors: {
+//     industry?: FieldError;
+//   };
+// };
 
 const IndustryField = ({ register, errors }: IndustryFieldPropsType) => {
   const { formState, setFormState } = useCompanyStore();
@@ -41,12 +42,10 @@ const IndustryField = ({ register, errors }: IndustryFieldPropsType) => {
           onChange={handleChange}
         >
           {Object.values(Industries).map((industry) => (
-            <MenuItem key={industry} value={industry} >
+            <MenuItem key={industry} value={industry}>
               {industry}
             </MenuItem>
           ))}
-          {/* <MenuItem value="aaa">aaa</MenuItem>
-          <MenuItem value="bbb">bbb</MenuItem> */}
         </Select>
         <Typography
           sx={{

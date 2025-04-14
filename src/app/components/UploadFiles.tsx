@@ -23,9 +23,6 @@ const UploadFiles = () => {
     resStatus,
   } = UseFilePermissionsStore();
 
-
-
-
   useEffect(() => {
     initializeState();
     getAllFiles();
@@ -45,19 +42,19 @@ const UploadFiles = () => {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-      if(resStatus && resStatus  >= 200 && resStatus <= 204) {
-        setOpen(false)
+      if (resStatus && resStatus >= 200 && resStatus <= 204) {
+        setOpen(false);
       }
     } catch (e) {
       console.log(e);
     } finally {
-      setOpen(false)
+      setOpen(false);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     }
   };
-  
+
   return (
     <div className="UPLOAD-FILE flex flex-col gap-4 w-[33%]">
       <button

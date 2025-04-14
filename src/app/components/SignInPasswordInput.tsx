@@ -1,14 +1,15 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
-import { SignInType } from "./SignIn";
+import { SignInPasswordInputPropsType } from "../interface";
+// import { SignInType } from "./SignIn";
 
-export type SignInPasswordInputPropsType = {
-  register: UseFormRegister<SignInType>;
-  errors: {
-    password?: FieldError;
-  };
-};
+// export type SignInPasswordInputPropsType = {
+//   register: UseFormRegister<SignInType>;
+//   errors: {
+//     password?: FieldError;
+//   };
+// };
 
 const SignInPasswordInput = ({
   errors,
@@ -20,7 +21,6 @@ const SignInPasswordInput = ({
         id="password"
         label="Password"
         type="password"
-        // value={password}
         sx={{ width: "100%" }}
         {...register("password")}
       />

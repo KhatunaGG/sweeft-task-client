@@ -7,17 +7,14 @@ import { ETier } from "../enums/Industries";
 
 const SubscriptionTier = () => {
   const { handleSubscriptionUpdate } = useSubscriptionStore();
-  // const initialize = useAuthStore((state) => state.initialize);
-  // const accessToken = useAuthStore((state) => state.accessToken);
-  const { getCurranUser, accessToken, initialize} = useAuthStore()
+  const { getCurranUser, accessToken, initialize } = useAuthStore();
   const { activeSubscription, setActiveSubscription } = useSubscriptionStore();
   const { company } = useAuthStore();
 
   useEffect(() => {
     initialize();
-    if(accessToken) {
-
-      getCurranUser(accessToken)
+    if (accessToken) {
+      getCurranUser(accessToken);
     }
     const subscriptionPlan = company?.subscriptionPlan || "";
     if (subscriptionPlan) {
@@ -26,12 +23,10 @@ const SubscriptionTier = () => {
   }, [initialize, company?.subscriptionPlan, setActiveSubscription]);
 
   const getBackgroundColor = (item: ETier): string => {
-    
     return activeSubscription === item ? "rgba(58, 91, 34, 0.1)" : "#fff";
   };
 
   const handleSelectSubscription = async (item: ETier) => {
-    // setActiveSubscription(item);
     await handleSubscriptionUpdate(item, accessToken ?? "");
   };
 

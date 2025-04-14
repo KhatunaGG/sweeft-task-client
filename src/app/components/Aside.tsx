@@ -3,7 +3,6 @@ import Image from "next/image";
 const Aside = () => {
   return (
     <section className="w-full  min-h-screen relative">
-      {/* <Image src={"/assets/img.png"} alt={""} fill /> */}
       <Image
         src="/assets/img.png"
         alt="Image description"

@@ -14,15 +14,17 @@ import { Suspense, useEffect, useState } from "react";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { UserSignInType } from "../interface";
+import { userSignInSchema } from "../schema";
 
-export const userSignInSchema = z.object({
-  firstName: z.string().min(1, { message: "Company name is required" }),
-  lastName: z.string().min(1, { message: "Company name is required" }),
-  userEmail: z.string().email().min(1, { message: "Email is required" }),
-  userPassword: z.string().min(1, { message: "Password is required" }),
-});
+// export const userSignInSchema = z.object({
+//   firstName: z.string().min(1, { message: "Company name is required" }),
+//   lastName: z.string().min(1, { message: "Company name is required" }),
+//   userEmail: z.string().email().min(1, { message: "Email is required" }),
+//   userPassword: z.string().min(1, { message: "Password is required" }),
+// });
 
-export type UserSignInType = z.infer<typeof userSignInSchema>;
+// export type UserSignInType = z.infer<typeof userSignInSchema>;
 
 const UserSignIn = () => {
   const [isClient, setIsClient] = useState(false);
@@ -99,8 +101,6 @@ const UserSignIn = () => {
         formState
       );
       if (res.status >= 200 && res.status <= 204) {
-        // const accessToken = res.data.accessToken;
-        // setCookie("accessToken", accessToken, { maxAge: 60 * 60 });
         router.push("/sign-in");
         reset();
       }

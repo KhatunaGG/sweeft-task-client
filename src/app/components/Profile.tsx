@@ -12,9 +12,7 @@ const Profile = () => {
       className="w-full border border-[#3A5B22] rounded-lg px-[80px] py-4 flex items-start justify-between "
     >
       <ChangePassword />
-
       <AddUser />
-
       <UploadFiles />
     </section>
   );

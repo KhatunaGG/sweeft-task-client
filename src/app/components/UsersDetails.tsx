@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../store/sign-in.store";
 import { useUtilities } from "../store/utilities.store";
-import UserUpdateForm from "./UserUpdateForm";
 import { MoveLeft, X } from "lucide-react";
 import { useDetailsPageStore } from "../store/details.store";
 import Pagination from "./Pagination";
@@ -42,10 +41,6 @@ const UsersDetails = () => {
     setUsersPage(newPage);
   };
 
-  // const handleItemsPerPage = (newTake: number) => {
-  //   setUsersTake(newTake);
-  // };
-
   return (
     <div className="flex flex-1 min-h-screen border-[3px] border-[#3A5B22] rounded-lg p-6 flex-col gap-6 relative">
       <Link href={"/"}>
@@ -65,14 +60,13 @@ const UsersDetails = () => {
                     {user.lastName || "Last Name"}
                   </h2>
                   <X
-                    // onClick={() => deleteFileUser(user._id)}
                     onClick={() => submit(user._id)}
                     className="w-4 h-4"
                   />
                 </div>
-                {user && user?.companyId === undefined ? (
+                {/* {user && user?.companyId === undefined ? (
                   <UserUpdateForm user={user} />
-                ) : null}
+                ) : null} */}
               </div>
             ) : null
           )
