@@ -3,12 +3,12 @@ import { useAuthStore } from "./sign-in.store";
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { axiosInstance } from "../libs/axiosInstance";
-import { SetStateAction } from "react";
 import { useUtilities } from "./utilities.store";
+import { ErrorResponse, IPermissions } from "../interface";
 
-interface ErrorResponse {
-  message: string;
-}
+// interface ErrorResponse {
+//   message: string;
+// }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
@@ -21,38 +21,38 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   return unexpectedError;
 };
 
-export interface IPermissions {
-  open: boolean;
-  file: File | null;
-  fileError: string;
-  selectedUsers: { permissionById: string; permissionByEmail: string }[];
-  checked: string | null;
-  uploadedFile: null;
-  axiosError: string | null;
-  resStatus: number | null;
-  showUsers: boolean;
-  extension: string | null;
+// export interface IPermissions {
+//   open: boolean;
+//   file: File | null;
+//   fileError: string;
+//   selectedUsers: { permissionById: string; permissionByEmail: string }[];
+//   checked: string | null;
+//   uploadedFile: null;
+//   axiosError: string | null;
+//   resStatus: number | null;
+//   showUsers: boolean;
+//   extension: string | null;
 
-  setExtension: (extension: string | null) => void;
-  setOpen: (open: boolean) => void;
-  setFile: (file: File | null) => void;
-  setFileError: (fileError: string) => void;
-  setSelectedUsers: (
-    selectedUsers: { permissionById: string; permissionByEmail: string }[]
-  ) => void;
-  setChecked: (checked: string | null | SetStateAction<string | null>) => void;
-  setShowUsers: (showUsers: boolean) => void;
-  setUploadedFile: (uploadedFile: null) => void;
-  setResStatus: (resStatus: number | null) => void;
-  handleUserSelection: (
-    userId: string,
-    email: string,
-    isChecked: boolean
-  ) => void;
-  uploadFile: () => void;
-  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  initializeState: () => void;
-}
+//   setExtension: (extension: string | null) => void;
+//   setOpen: (open: boolean) => void;
+//   setFile: (file: File | null) => void;
+//   setFileError: (fileError: string) => void;
+//   setSelectedUsers: (
+//     selectedUsers: { permissionById: string; permissionByEmail: string }[]
+//   ) => void;
+//   setChecked: (checked: string | null | SetStateAction<string | null>) => void;
+//   setShowUsers: (showUsers: boolean) => void;
+//   setUploadedFile: (uploadedFile: null) => void;
+//   setResStatus: (resStatus: number | null) => void;
+//   handleUserSelection: (
+//     userId: string,
+//     email: string,
+//     isChecked: boolean
+//   ) => void;
+//   uploadFile: () => void;
+//   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+//   initializeState: () => void;
+// }
 
 export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
   open: false,
@@ -169,8 +169,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
           open: false,
           resStatus: res.status,
         });
-        
-        
+
         toast.success("File uploaded successfully");
         if (accessToken) {
           await useAuthStore.getState().getCurranUser(accessToken);
@@ -194,7 +193,7 @@ export const UseFilePermissionsStore = create<IPermissions>((set, get) => ({
       localStorage.removeItem("open");
       toast.error(errorMessage);
     } finally {
-      set({open: false})
+      set({ open: false });
       localStorage.removeItem("open");
     }
   },

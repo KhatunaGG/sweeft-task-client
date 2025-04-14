@@ -3,28 +3,27 @@ import { ETier } from "../enums/Industries";
 import { axiosInstance } from "../libs/axiosInstance";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { ErrorResponse, ISubscriptionStor } from "../interface";
 
+// export interface ISubscriptionStor {
+//   subscriptionPlan: ETier;
+//   activeSubscription: ETier;
+//   axiosError: string | null;
+//   verificationStatus: { resStatus: number; message: string } | null;
+//   setVerificationStatus: (status: {
+//     resStatus: number;
+//     message: string;
+//   }) => void;
+//   setActiveSubscription: (subscriptionPlan: ETier) => void;
+//   setTier: (subscriptionPlan: ETier) => void;
+//   handleSubscriptionUpdate: (subscriptionPlan: ETier, et: string) => void;
+// }
 
-export interface ISubscriptionStor {
-  subscriptionPlan: ETier;
-  activeSubscription: ETier;
-  axiosError: string | null;
-  verificationStatus: { resStatus: number; message: string } | null;
-  setVerificationStatus: (status: {
-    resStatus: number;
-    message: string;
-  }) => void;
-  setActiveSubscription: (subscriptionPlan: ETier) => void;
-  setTier: (subscriptionPlan: ETier) => void;
-  handleSubscriptionUpdate: (subscriptionPlan: ETier, et: string) => void;
-}
-
-interface ErrorResponse {
-  message: string;
-}
+// interface ErrorResponse {
+//   message: string;
+// }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
-  // Set type as AxiosError
   if (axios.isAxiosError(error)) {
     const errorMessage = error.response?.data.message || "An error occurred";
     toast.error(errorMessage);
@@ -67,7 +66,6 @@ export const useSubscriptionStore = create<ISubscriptionStor>((set) => ({
       );
 
       if (res.status >= 200 && res.status <= 204) {
-
         set({
           verificationStatus: {
             resStatus: res.status,
@@ -75,12 +73,10 @@ export const useSubscriptionStore = create<ISubscriptionStor>((set) => ({
           },
           activeSubscription: subscriptionPlan,
         });
-     
       }
     } catch (e) {
       const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
       set({ axiosError: errorMessage });
-
-    } 
+    }
   },
 }));

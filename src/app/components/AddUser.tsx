@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -8,12 +7,14 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/sign-in.store";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useUtilities } from "../store/utilities.store";
+import { FormValue } from "../interface";
+import { userEmailSendSchema } from "../schema";
 
-const userEmailSendSchema = z.object({
-  userEmail: z.string().email().min(1, "Email is requeued"),
-});
+// const userEmailSendSchema = z.object({
+//   userEmail: z.string().email().min(1, "Email is requeued"),
+// });
 
-type FormValue = z.infer<typeof userEmailSendSchema>;
+// type FormValue = z.infer<typeof userEmailSendSchema>;
 
 const AddUser = () => {
   const [open, setOpen] = useState(false);
@@ -22,9 +23,8 @@ const AddUser = () => {
   const { usersLength, getAllUsers } = useUtilities();
 
   useEffect(() => {
-    getAllUsers()
-  }, [accessToken])
-
+    getAllUsers();
+  }, [accessToken]);
 
   const {
     register,
@@ -37,11 +37,8 @@ const AddUser = () => {
       userEmail: "",
     },
   });
-  
-
 
   const onsubmit = async (formState: FormValue) => {
-    console.log(formState, "formState")
     setIsLoading(true);
     if (Object.keys(errors).length > 0) {
       return;
@@ -53,10 +50,10 @@ const AddUser = () => {
         },
       });
       if (res.status >= 200 || res.status <= 204) {
-        getAllUsers()
+        getAllUsers();
         reset();
-        setOpen(!open)
-      } 
+        setOpen(!open);
+      }
     } catch (e) {
       if (axios.isAxiosError(e)) {
         if (e.response) {
@@ -71,10 +68,9 @@ const AddUser = () => {
     } finally {
       setIsLoading(false);
       reset();
-      setOpen(!open)
+      setOpen(!open);
     }
   };
-
 
   return (
     <div className="UPLOAD-FILE flex flex-col gap-4 w-[33%]  ">
@@ -107,15 +103,6 @@ const AddUser = () => {
             </p>
           )}
         </div>
-
-        {/* <div>
-          <label className="w-full text-[#9b9494] text-xs ">New Password</label>
-          <input
-            type="text"
-            className="w-full border border-[#dddada] rounded-lg py-2 outline-none px-4"
-          />
-        </div> */}
-
         <button
           disabled={isLoading || isSubmitting}
           type="submit"

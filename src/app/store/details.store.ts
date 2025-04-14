@@ -1,23 +1,19 @@
 import { create } from "zustand";
-import { IUser, useAuthStore } from "./sign-in.store";
+// import { IUser, useAuthStore } from "./sign-in.store";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useUtilities } from "./utilities.store";
+import { ErrorResponse, IDetailsPage, PermissionType } from "../interface";
+import { useAuthStore } from "./sign-in.store";
 
-export type PermissionType = {
-  permissionById: string;
-  permissionByEmail: string;
-};
+// export type PermissionType = {
+//   permissionById: string;
+//   permissionByEmail: string;
+// };
 
-interface ErrorResponse {
-  message: string;
-}
-
-// interface FileDownloadResponse {
-//   data: Uint8Array | Buffer;
-//   contentType: string;
-//   fileName: string;
+// interface ErrorResponse {
+//   message: string;
 // }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
@@ -31,27 +27,24 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   return unexpectedError;
 };
 
-export interface IDetailsPage {
-  selected: string | null;
-  selectedPermission: PermissionType[] | undefined;
-  axiosError: string;
-  deletedUser: IUser | null;
-  isLoading: boolean;
-  setDeletedUser: (deletedUser: IUser | null) => void;
-
-  resStatus: number;
-  setResStatus: (resStatus: number) => void;
-  setIsLoading: (isLoading: boolean) => void;
-
-  setSelected: (selected: string | null) => void;
-  setSelectedPermission: (permission: PermissionType[] | undefined) => void;
-  deleteFile: (id: string) => void;
-  getSelectedPermission: (id: string) => void;
-  updatePermissions: (permissionId: string, checked: boolean) => void;
-  deleteFileUser: (id: string) => void;
-
-  handleDownload: (Id: string) => void;
-}
+// export interface IDetailsPage {
+//   selected: string | null;
+//   selectedPermission: PermissionType[] | undefined;
+//   axiosError: string;
+//   deletedUser: IUser | null;
+//   isLoading: boolean;
+//   setDeletedUser: (deletedUser: IUser | null) => void;
+//   resStatus: number;
+//   setResStatus: (resStatus: number) => void;
+//   setIsLoading: (isLoading: boolean) => void;
+//   setSelected: (selected: string | null) => void;
+//   setSelectedPermission: (permission: PermissionType[] | undefined) => void;
+//   deleteFile: (id: string) => void;
+//   getSelectedPermission: (id: string) => void;
+//   updatePermissions: (permissionId: string, checked: boolean) => void;
+//   deleteFileUser: (id: string) => void;
+//   handleDownload: (Id: string) => void;
+// }
 
 export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
   selected: null,
@@ -72,8 +65,12 @@ export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
 
   deleteFile: async (id: string) => {
     const { accessToken } = useAuthStore.getState();
-    const { getAllFiles } = useUtilities.getState();
+    const { getAllFiles, filesTake, filesPage, setFilesPage, allFiles } =
+      useUtilities.getState();
+
     if (!accessToken) return;
+
+    set({ isLoading: true });
     try {
       const res = await axiosInstance.delete(`file/${id}`, {
         headers: {
@@ -82,15 +79,34 @@ export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
       });
 
       if (res.status >= 200 && res.status <= 204) {
+        const currentPageFiles = allFiles;
+        const isLastFileOnPage = currentPageFiles.length === 1;
+        const filesResponse = await axiosInstance.get(
+          `file/all?page=1&limit=1`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const totalFiles = filesResponse.data.filesTotalLength;
+        const totalPages = Math.ceil(totalFiles / filesTake);
+        if (isLastFileOnPage && filesPage > 1 && filesPage > totalPages) {
+          setFilesPage(filesPage - 1);
+        } else if (totalPages === 0) {
+          setFilesPage(1);
+        }
+
         toast.success("File deleted successfully");
         getAllFiles();
       }
     } catch (e) {
       const errorMessage = handleApiError(e as AxiosError<ErrorResponse>);
       set({ axiosError: errorMessage });
+    } finally {
+      set({ isLoading: false });
     }
   },
-
   getSelectedPermission: (id: string) => {
     const { allFiles } = useUtilities.getState();
     const active = allFiles.find((item) => item._id === id);

@@ -1,15 +1,3 @@
-// export default function AuthLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   return (
-//     <main className="w-full bg-green-200">
-//       <div className="bg-white w-full rounded-xl tablet:p-10">{children}</div>
-//     </main>
-//   );
-// }
-
 import Aside from "../components/Aside";
 
 export default function AuthLayout({

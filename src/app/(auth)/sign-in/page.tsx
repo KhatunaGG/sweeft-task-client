@@ -1,5 +1,4 @@
 import SignIn from "@/app/components/SignIn";
-import React from "react";
 
 export default function page() {
   return (

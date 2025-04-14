@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -7,28 +6,26 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useAuthStore } from "../store/sign-in.store";
+import { PasswordFormValues } from "../interface";
+import { passwordSchema } from "../schema";
 
-export const passwordSchema = z
-  .object({
-    currentPassword: z.string().min(1, "Current password is required"),
-    newPassword: z.string().min(4, "Password must be at least 4 characters"),
-    // .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    // .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    // .regex(/[0-9]/, "Password must contain at least one number"),
-    confirmNewPassword: z.string().min(1, "Please confirm your new password"),
-  })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    message: "Passwords do not match",
-    path: ["confirmNewPassword"],
-  });
+// export const passwordSchema = z
+//   .object({
+//     currentPassword: z.string().min(1, "Current password is required"),
+//     newPassword: z.string().min(4, "Password must be at least 4 characters"),
+//     confirmNewPassword: z.string().min(1, "Please confirm your new password"),
+//   })
+//   .refine((data) => data.newPassword === data.confirmNewPassword, {
+//     message: "Passwords do not match",
+//     path: ["confirmNewPassword"],
+//   });
 
-type PasswordFormValues = z.infer<typeof passwordSchema>;
+// type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 const ChangePassword = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { accessToken } = useAuthStore();
-  //   console.log(accessToken, "accessToken");
   const {
     register,
     reset,
@@ -106,8 +103,7 @@ const ChangePassword = () => {
           </label>
           <input
             {...register("currentPassword")}
-            // type="password"
-            type="text"
+            type="password"
             className="w-full border border-[#dddada] rounded-lg py-2 outline-none px-4 text-sm"
           />
           {errors.currentPassword && (
@@ -121,8 +117,7 @@ const ChangePassword = () => {
           <label className="w-full text-[#9b9494] text-xs ">New Password</label>
           <input
             {...register("newPassword")}
-            // type="password"
-            type="text"
+            type="password"
             className="w-full border border-[#dddada] rounded-lg py-2 outline-none px-4 text-sm"
           />
           {errors.newPassword && (
@@ -138,8 +133,7 @@ const ChangePassword = () => {
           </label>
           <input
             {...register("confirmNewPassword")}
-            // type="password"
-            type="text"
+            type="password"
             className="w-full border border-[#dddada] rounded-lg py-2 outline-none px-4 text-sm"
           />
           {errors.confirmNewPassword && (

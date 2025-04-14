@@ -8,37 +8,30 @@ import CountryField from "./CountryField";
 import IndustryField from "./IndustryField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useCompanyStore } from "../store/sign-up.store";
 import Link from "next/link";
+import { CompanyType } from "../interface";
+import { companySchema } from "../schema";
 
+// export type CompanyType = {
+//   name: string;
+//   email: string;
+//   password: string;
+//   country: string;
+//   industry: string;
+// };
 
-export type CompanyType = {
-  name: string;
-  email: string;
-  password: string;
-  country: string;
-  industry: string;
-};
-
-export const companySchema = z.object({
-  name: z.string().min(1, { message: "Company name is required" }),
-  email: z.string().email().min(1, { message: "Email is required" }),
-  password: z.string().min(1, { message: "Password is required" }),
-  country: z.string().min(1, { message: "Country is required" }),
-  industry: z.string().min(1, { message: "Industry is required" }),
-});
+// export const companySchema = z.object({
+//   name: z.string().min(1, { message: "Company name is required" }),
+//   email: z.string().email().min(1, { message: "Email is required" }),
+//   password: z.string().min(1, { message: "Password is required" }),
+//   country: z.string().min(1, { message: "Country is required" }),
+//   industry: z.string().min(1, { message: "Industry is required" }),
+// });
 
 const SignUp = () => {
-  const {
-    setFormState,
-    createCompany,
-    success,
-    isLoading,
-    linkResendCount
-  } = useCompanyStore();
-
-
+  const { setFormState, createCompany, success, isLoading, linkResendCount } =
+    useCompanyStore();
 
   const {
     register,
@@ -138,7 +131,6 @@ const SignUp = () => {
             }}
             type="submit"
             variant="contained"
-            // color="primary"
             disabled={isLoading || isSubmitting}
           >
             Sign up
@@ -150,15 +142,6 @@ const SignUp = () => {
         <Link href={"/sign-in"}>
           <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
         </Link>
-
-        {/* <button
-          onClick={() => getResendLink(resendEmail)}
-          type="button"
-          className="absolute top-8 text-xs text-[#3A5B22] font-semibold cursor-pointer hover:underline transition-transform duration-300 ease-in-out hover:scale-105"
-        >
-          Resend verification link
-        </button> */}
-
         {linkResendCount > 0 && (
           <p className="text-sm text-gray-600">
             Verification email resent {linkResendCount} times. (Maximum: 3

@@ -7,10 +7,10 @@ import { useDetailsPageStore } from "../store/details.store";
 import Pagination from "./Pagination";
 import Link from "next/link";
 
-export type PermissionType = {
-  permissionById: string;
-  permissionByEmail: string;
-};
+// export type PermissionType = {
+//   permissionById: string;
+//   permissionByEmail: string;
+// };
 
 const FilesDetails = () => {
   const {
@@ -32,6 +32,7 @@ const FilesDetails = () => {
     selected,
     setSelected,
     handleDownload,
+    isLoading
   } = useDetailsPageStore();
 
   useEffect(() => {
@@ -44,9 +45,6 @@ const FilesDetails = () => {
       getAllUsers();
     }
   }, [accessToken, getAllFiles, getAllUsers, filesPage, filesTake]);
-
-
-
 
   useEffect(() => {
     if (selected) {
@@ -67,10 +65,6 @@ const FilesDetails = () => {
   const handlePageChange = (newPage: number) => {
     setFilesPage(newPage);
   };
-
-  // const handleItemsPerPage = (newTake: number) => {
-  //   setFilesTake(newTake);
-  // };
 
   const safeAllFiles = Array.isArray(allFiles) ? allFiles : [];
   if (!accessToken) return null;
@@ -109,7 +103,6 @@ const FilesDetails = () => {
                   </div>
                 </div>
 
-                {/* <UserPermissions /> */}
                 <div
                   className={`${
                     selected === file._id ? "flex" : "hidden"
@@ -186,8 +179,7 @@ const FilesDetails = () => {
         currentPage={filesPage}
         onPageChange={handlePageChange}
         totalPages={Math.ceil(filesLength / filesTake)}
-        // onItemsPerPage={handleItemsPerPage}
-        // take={filesTake}
+        isLoading={isLoading}
       />
     </div>
   );
