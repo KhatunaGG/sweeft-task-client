@@ -1,11 +1,6 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { PasswordFieldPropsType } from "../interface";
 
 // export type PasswordFieldPropsType<T extends FieldValues> = {

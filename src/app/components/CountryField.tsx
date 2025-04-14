@@ -1,6 +1,5 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
-import { FieldError, UseFormRegister } from "react-hook-form";
 import { CountryFieldPropsType } from "../interface";
 
 

@@ -8,7 +8,6 @@ import CountryField from "./CountryField";
 import IndustryField from "./IndustryField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useCompanyStore } from "../store/sign-up.store";
 import Link from "next/link";
 import { CompanyType } from "../interface";

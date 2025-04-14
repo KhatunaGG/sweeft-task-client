@@ -1,6 +1,6 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
-import { FieldError, UseFormRegister } from "react-hook-form";
+// import { FieldError, UseFormRegister } from "react-hook-form";
 import { SignInEmailInputPropsType } from "../interface";
 // import { SignInType } from "./SignIn";
 

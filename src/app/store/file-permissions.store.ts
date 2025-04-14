@@ -3,7 +3,6 @@ import { useAuthStore } from "./sign-in.store";
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { axiosInstance } from "../libs/axiosInstance";
-import { SetStateAction } from "react";
 import { useUtilities } from "./utilities.store";
 import { ErrorResponse, IPermissions } from "../interface";
 

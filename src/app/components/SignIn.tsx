@@ -6,7 +6,6 @@ import SignInEmailInput from "./SignInEmailInput";
 import SignInPasswordInput from "./SignInPasswordInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "../store/sign-in.store";
 import { toast } from "react-toastify";

@@ -5,7 +5,6 @@ import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import LastNameField from "./LastNameField";
 import Image from "next/image";
 import axios from "axios";

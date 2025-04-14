@@ -1,5 +1,4 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { UseFilePermissionsStore } from "../store/file-permissions.store";
 // import { IUser } from "../store/utilities.store";

@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useUtilities } from "./utilities.store";
-import { ErrorResponse, IDetailsPage, IUser, PermissionType } from "../interface";
+import { ErrorResponse, IDetailsPage, PermissionType } from "../interface";
 import { useAuthStore } from "./sign-in.store";
 
 // export type PermissionType = {

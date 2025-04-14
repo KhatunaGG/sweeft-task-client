@@ -6,7 +6,7 @@ import { axiosInstance } from "../libs/axiosInstance";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 // import { ICompany } from "./utilities.store";
 import { useCompanyStore } from "./sign-up.store";
-import { ErrorResponse, ICompany, ISignIn, IUser, SignInType } from "../interface";
+import { ErrorResponse, ICompany, ISignIn, IUser } from "../interface";
 
 // interface ErrorResponse {
 //   message: string;

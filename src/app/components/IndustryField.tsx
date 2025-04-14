@@ -8,11 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { FieldError, UseFormRegister } from "react-hook-form";
-// import { CompanyType } from "./SignUp";
 import { useCompanyStore } from "../store/sign-up.store";
 import { Industries } from "../enums/Industries";
-import { CompanyType, IndustryFieldPropsType } from "../interface";
+import { IndustryFieldPropsType } from "../interface";
 
 // export type IndustryFieldPropsType = {
 //   register: UseFormRegister<CompanyType>;

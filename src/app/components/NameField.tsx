@@ -1,12 +1,7 @@
 "use client";
 import { TextField, Typography } from "@mui/material";
 import React from "react";
-import {
-  UseFormRegister,
-  FieldValues,
-  Path,
-  FieldErrors,
-} from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { NameFieldPropsType } from "../interface";
 
 // export type NameFieldPropsType<T extends FieldValues> = {
