@@ -1,20 +1,10 @@
 import { create } from "zustand";
-// import { IUser, useAuthStore } from "./sign-in.store";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { useUtilities } from "./utilities.store";
 import { ErrorResponse, IDetailsPage, PermissionType } from "../interface";
 import { useAuthStore } from "./sign-in.store";
-
-// export type PermissionType = {
-//   permissionById: string;
-//   permissionByEmail: string;
-// };
-
-// interface ErrorResponse {
-//   message: string;
-// }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
@@ -26,25 +16,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   toast.error(unexpectedError);
   return unexpectedError;
 };
-
-// export interface IDetailsPage {
-//   selected: string | null;
-//   selectedPermission: PermissionType[] | undefined;
-//   axiosError: string;
-//   deletedUser: IUser | null;
-//   isLoading: boolean;
-//   setDeletedUser: (deletedUser: IUser | null) => void;
-//   resStatus: number;
-//   setResStatus: (resStatus: number) => void;
-//   setIsLoading: (isLoading: boolean) => void;
-//   setSelected: (selected: string | null) => void;
-//   setSelectedPermission: (permission: PermissionType[] | undefined) => void;
-//   deleteFile: (id: string) => void;
-//   getSelectedPermission: (id: string) => void;
-//   updatePermissions: (permissionId: string, checked: boolean) => void;
-//   deleteFileUser: (id: string) => void;
-//   handleDownload: (Id: string) => void;
-// }
 
 export const useDetailsPageStore = create<IDetailsPage>((set, get) => ({
   selected: null,

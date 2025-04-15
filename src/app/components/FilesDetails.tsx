@@ -7,11 +7,6 @@ import { useDetailsPageStore } from "../store/details.store";
 import Pagination from "./Pagination";
 import Link from "next/link";
 
-// export type PermissionType = {
-//   permissionById: string;
-//   permissionByEmail: string;
-// };
-
 const FilesDetails = () => {
   const {
     allFiles,
@@ -32,7 +27,7 @@ const FilesDetails = () => {
     selected,
     setSelected,
     handleDownload,
-    isLoading
+    isLoading,
   } = useDetailsPageStore();
 
   useEffect(() => {

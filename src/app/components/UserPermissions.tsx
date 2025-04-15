@@ -1,19 +1,7 @@
 "use client";
 import { ChevronDown, X } from "lucide-react";
 import { UseFilePermissionsStore } from "../store/file-permissions.store";
-// import { IUser } from "../store/utilities.store";
 import { UserPermissionsPropsType } from "../interface";
-
-// export type UserPermissionsPropsType = {
-//   allUsers: IUser[];
-//   handleUserSelection: (
-//     userId: string,
-//     email: string,
-//     isChecked: boolean
-//   ) => void;
-//   setChecked: Dispatch<SetStateAction<string | null>>;
-//   checked: string | null;
-// };
 
 const UserPermissions = ({
   allUsers,

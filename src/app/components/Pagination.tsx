@@ -2,13 +2,6 @@ import { SquareArrowLeft, SquareArrowRight } from "lucide-react";
 import React from "react";
 import { PaginationPropsType } from "../interface";
 
-// export type PaginationPropsType = {
-//   currentPage: number;
-//   onPageChange: (page: number) => void;
-//   totalPages: number;
-//   isLoading?: boolean;
-// };
-
 const Pagination = ({
   currentPage,
   onPageChange,
@@ -22,7 +15,7 @@ const Pagination = ({
     const pageNumbers: (number | string)[] = [];
     const maxPagesToShow = 5;
     const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages));
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);

@@ -3,12 +3,6 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 import { PasswordFieldPropsType } from "../interface";
 
-// export type PasswordFieldPropsType<T extends FieldValues> = {
-//   register: UseFormRegister<T>;
-//   errors: FieldErrors<T>;
-//   fieldName: Path<T>;
-// };
-
 const PasswordField = <T extends FieldValues>({
   register,
   errors,

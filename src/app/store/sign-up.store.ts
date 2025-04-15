@@ -1,15 +1,10 @@
 "use client";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-// import { CompanyType } from "../components/SignUp";
 import { axiosInstance } from "../libs/axiosInstance";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { CompanyType, ErrorResponse, ICompanyStore } from "../interface";
-
-// interface ErrorResponse {
-//   message: string;
-// }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
@@ -21,22 +16,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   toast.error(unexpectedError);
   return unexpectedError;
 };
-
-// export interface ICompanyStore {
-//   formState: CompanyType;
-//   setFormState: (formState: ICompanyStore["formState"]) => void;
-//   createCompany: (data: CompanyType) => void;
-//   resendEmail: string;
-//   setResendEmail: (resendEmail: string) => void;
-//   success: boolean;
-//   axiosError: string;
-//   isLoading: boolean;
-//   linkResendCount: number;
-//   setLinkResendCount: (linkResendCount: number) => void;
-//   getResendLink: (email: string) => void;
-
-//   clearPersistedState: () => void;
-// }
 
 export const useCompanyStore = create<ICompanyStore>()(
   persist(
@@ -50,15 +29,12 @@ export const useCompanyStore = create<ICompanyStore>()(
       },
       linkResendCount: 0,
       resendEmail: "",
-      setResendEmail: (resendEmail: string) => set({ resendEmail }),
-
       success: false,
       axiosError: "",
       isLoading: false,
-
+      setResendEmail: (resendEmail: string) => set({ resendEmail }),
       setLinkResendCount: (linkResendCount) => set({ linkResendCount }),
       setFormState: (formState) => set({ formState }),
-
       clearPersistedState: () => {
         set({
           resendEmail: "",

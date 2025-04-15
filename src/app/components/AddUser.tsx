@@ -10,11 +10,6 @@ import { useUtilities } from "../store/utilities.store";
 import { FormValue } from "../interface";
 import { userEmailSendSchema } from "../schema";
 
-// const userEmailSendSchema = z.object({
-//   userEmail: z.string().email().min(1, "Email is requeued"),
-// });
-
-// type FormValue = z.infer<typeof userEmailSendSchema>;
 
 const AddUser = () => {
   const [open, setOpen] = useState(false);

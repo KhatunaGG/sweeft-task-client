@@ -3,13 +3,6 @@ import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { LastNamePropsType } from "../interface";
 
-// export type LastNamePropsType = {
-//   register: UseFormRegister<UserSignInType>;
-//   errors: {
-//     lastName?: FieldError;
-//   };
-// };
-
 const LastNameField = ({ register, errors }: LastNamePropsType) => {
   return (
     <div className="w-full relative">

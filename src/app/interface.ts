@@ -225,7 +225,6 @@ export interface ICompanyStore {
   clearPersistedState: () => void;
 }
 
-
 export interface ISignIn {
   signInFormState: SignInType;
   verificationStatus: { success: boolean; message: string } | null;
@@ -248,7 +247,6 @@ export interface ISignIn {
   getCurranUser: (accessToken: string | undefined) => void;
   logout: () => void;
 }
-
 
 export interface IPermissions {
   open: boolean;
@@ -282,8 +280,6 @@ export interface IPermissions {
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   initializeState: () => void;
 }
-
-
 
 export interface IDetailsPage {
   selected: string | null;

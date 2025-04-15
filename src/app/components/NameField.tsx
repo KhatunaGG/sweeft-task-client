@@ -4,12 +4,6 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 import { NameFieldPropsType } from "../interface";
 
-// export type NameFieldPropsType<T extends FieldValues> = {
-//   register: UseFormRegister<T>;
-//   errors: FieldErrors<T>;
-//   fieldName: Path<T>;
-// };
-
 const NameField = <T extends FieldValues>({
   register,
   errors,

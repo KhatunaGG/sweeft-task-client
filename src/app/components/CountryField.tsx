@@ -2,14 +2,6 @@ import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { CountryFieldPropsType } from "../interface";
 
-
-// export type CountryFieldPropsType = {
-//   register: UseFormRegister<CompanyType>;
-//   errors: {
-//     country?: FieldError;
-//   };
-// };
-
 const CountryField = ({ register, errors }: CountryFieldPropsType) => {
   return (
     <div className="w-full relative">

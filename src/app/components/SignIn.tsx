@@ -12,16 +12,6 @@ import { toast } from "react-toastify";
 import { SignInType } from "../interface";
 import { SignInSchema } from "../schema";
 
-// export type SignInType = {
-//   email: string;
-//   password: string;
-// };
-
-// export const SignInSchema = z.object({
-//   email: z.string().email().min(1, "Company name is required"),
-//   password: z.string().min(1, { message: "Password is required" }),
-// });
-
 const SignInContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
