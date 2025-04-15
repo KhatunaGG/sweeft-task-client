@@ -16,15 +16,6 @@ import { useRouter } from "next/navigation";
 import { UserSignInType } from "../interface";
 import { userSignInSchema } from "../schema";
 
-// export const userSignInSchema = z.object({
-//   firstName: z.string().min(1, { message: "Company name is required" }),
-//   lastName: z.string().min(1, { message: "Company name is required" }),
-//   userEmail: z.string().email().min(1, { message: "Email is required" }),
-//   userPassword: z.string().min(1, { message: "Password is required" }),
-// });
-
-// export type UserSignInType = z.infer<typeof userSignInSchema>;
-
 const UserSignIn = () => {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

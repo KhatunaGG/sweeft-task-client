@@ -5,57 +5,6 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ErrorResponse, IFile, IUser, IUtilities } from "../interface";
 
-// export interface IUser {
-//   _id: string;
-//   userEmail: string;
-//   companyId: string;
-//   isVerified: boolean;
-//   validationLink: string | null;
-//   validationLinkValidateDate: string | null;
-//   role: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   __v: number;
-//   firstName?: string;
-//   lastName?: string;
-// }
-
-// export interface ICompany {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   country: string;
-//   industry: string;
-//   isVerified: boolean;
-//   validationLink: string | null;
-//   validationLinkValidateDate: string | null;
-//   role: string;
-//   subscriptionPlan: string;
-//   uploadedFiles: string[];
-//   user: string[];
-//   createdAt: string;
-//   updatedAt: string;
-//   __v: number;
-//   premiumCharge: number;
-//   extraUserCharge: number;
-//   extraFileCharge: number;
-// }
-
-// export interface IFile {
-//   _id: string;
-//   filePath: string;
-//   fileOwnerId: string;
-//   fileOwnerCompanyId: string;
-//   userPermissions: string[];
-//   fileName: string;
-//   extension: string;
-//   contentType?: string;
-// }
-
-// interface ErrorResponse {
-//   message: string;
-// }
-
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {
     const errorMessage = error.response?.data.message || "An error occurred";
@@ -66,28 +15,6 @@ const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   toast.error(unexpectedError);
   return unexpectedError;
 };
-
-// export interface IUtilities {
-//   allUsers: IUser[];
-//   allFiles: IFile[];
-//   usersLength: number;
-//   filesLength: number;
-//   usersPage: number;
-//   usersTake: number;
-//   filesPage: number;
-//   filesTake: number;
-//   axiosError?: string | null;
-
-//   setAxiosError: (axiosError: string | null) => void;
-//   setUsersPage: (page: number) => void;
-//   setUsersTake: (take: number) => void;
-//   setFilesPage: (page: number) => void;
-//   setFilesTake: (take: number) => void;
-//   setAllFiles: (allFiles: IFile[]) => void;
-//   setAllUsers: (allUsers: IUser[]) => void;
-//   getAllUsers: () => Promise<void>;
-//   getAllFiles: () => Promise<void>;
-// }
 
 export const useUtilities = create<IUtilities>((set, get) => ({
   allUsers: [],

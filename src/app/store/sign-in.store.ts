@@ -1,54 +1,10 @@
 import { create } from "zustand";
-// import { SignInType } from "../components/SignIn";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../libs/axiosInstance";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
-// import { ICompany } from "./utilities.store";
 import { useCompanyStore } from "./sign-up.store";
 import { ErrorResponse, ICompany, ISignIn, IUser } from "../interface";
-
-// interface ErrorResponse {
-//   message: string;
-// }
-
-// export interface IUser {
-//   _id: string;
-//   userEmail: string;
-//   companyId: string;
-//   isVerified: boolean;
-//   validationLink: string | null;
-//   validationLinkValidateDate: string | null;
-//   role: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   __v: number;
-//   firstName?: string;
-//   lastName?: string;
-// }
-
-// export interface ISignIn {
-//   signInFormState: SignInType;
-//   verificationStatus: { success: boolean; message: string } | null;
-//   axiosError: string | null;
-//   isLoading: boolean;
-//   accessToken: string | null;
-//   user: IUser | null;
-//   company: ICompany | null;
-//   setAccessToken: (token: string) => void;
-//   setVerificationStatus: (status: {
-//     success: boolean;
-//     message: string;
-//   }) => void;
-//   setEmail: (email: string) => void;
-//   setUser: (user: IUser | null) => void;
-//   setCompany: (company: ICompany | null) => void;
-//   verifyEmail: (token: string) => void;
-//   login: (data: SignInType) => void;
-//   initialize: () => void;
-//   getCurranUser: (accessToken: string | undefined) => void;
-//   logout: () => void;
-// }
 
 const handleApiError = (error: AxiosError<ErrorResponse>): string => {
   if (axios.isAxiosError(error)) {

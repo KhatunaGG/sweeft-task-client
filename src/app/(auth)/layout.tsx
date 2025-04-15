@@ -17,4 +17,4 @@ export default function AuthLayout({
   );
 }
 
-//w-[49.12%]
+

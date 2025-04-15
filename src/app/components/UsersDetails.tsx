@@ -59,14 +59,8 @@ const UsersDetails = () => {
                     {user.firstName || "First Name"}{" "}
                     {user.lastName || "Last Name"}
                   </h2>
-                  <X
-                    onClick={() => submit(user._id)}
-                    className="w-4 h-4"
-                  />
+                  <X onClick={() => submit(user._id)} className="w-4 h-4" />
                 </div>
-                {/* {user && user?.companyId === undefined ? (
-                  <UserUpdateForm user={user} />
-                ) : null} */}
               </div>
             ) : null
           )
@@ -79,8 +73,6 @@ const UsersDetails = () => {
         currentPage={usersPage}
         onPageChange={handlePageChange}
         totalPages={Math.ceil(usersLength / usersTake)}
-        // onItemsPerPage={handleItemsPerPage}
-        // take={usersTake}
       />
     </div>
   );

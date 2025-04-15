@@ -12,13 +12,6 @@ import { useCompanyStore } from "../store/sign-up.store";
 import { Industries } from "../enums/Industries";
 import { IndustryFieldPropsType } from "../interface";
 
-// export type IndustryFieldPropsType = {
-//   register: UseFormRegister<CompanyType>;
-//   errors: {
-//     industry?: FieldError;
-//   };
-// };
-
 const IndustryField = ({ register, errors }: IndustryFieldPropsType) => {
   const { formState, setFormState } = useCompanyStore();
 

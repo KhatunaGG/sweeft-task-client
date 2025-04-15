@@ -1,15 +1,6 @@
 import { TextField, Typography } from "@mui/material";
 import React from "react";
-// import { FieldError, UseFormRegister } from "react-hook-form";
 import { SignInEmailInputPropsType } from "../interface";
-// import { SignInType } from "./SignIn";
-
-// export type SignInEmailInputPropsType = {
-//   register: UseFormRegister<SignInType>;
-//   errors: {
-//     email?: FieldError;
-//   };
-// };
 
 const SignInEmailInput = ({ register, errors }: SignInEmailInputPropsType) => {
   return (

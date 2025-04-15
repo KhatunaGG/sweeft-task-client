@@ -13,22 +13,6 @@ import Link from "next/link";
 import { CompanyType } from "../interface";
 import { companySchema } from "../schema";
 
-// export type CompanyType = {
-//   name: string;
-//   email: string;
-//   password: string;
-//   country: string;
-//   industry: string;
-// };
-
-// export const companySchema = z.object({
-//   name: z.string().min(1, { message: "Company name is required" }),
-//   email: z.string().email().min(1, { message: "Email is required" }),
-//   password: z.string().min(1, { message: "Password is required" }),
-//   country: z.string().min(1, { message: "Country is required" }),
-//   industry: z.string().min(1, { message: "Industry is required" }),
-// });
-
 const SignUp = () => {
   const { setFormState, createCompany, success, isLoading, linkResendCount } =
     useCompanyStore();

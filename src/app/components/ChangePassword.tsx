@@ -9,19 +9,6 @@ import { useAuthStore } from "../store/sign-in.store";
 import { PasswordFormValues } from "../interface";
 import { passwordSchema } from "../schema";
 
-// export const passwordSchema = z
-//   .object({
-//     currentPassword: z.string().min(1, "Current password is required"),
-//     newPassword: z.string().min(4, "Password must be at least 4 characters"),
-//     confirmNewPassword: z.string().min(1, "Please confirm your new password"),
-//   })
-//   .refine((data) => data.newPassword === data.confirmNewPassword, {
-//     message: "Passwords do not match",
-//     path: ["confirmNewPassword"],
-//   });
-
-// type PasswordFormValues = z.infer<typeof passwordSchema>;
-
 const ChangePassword = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

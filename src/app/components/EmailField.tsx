@@ -3,12 +3,6 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 import { EmailFieldPropsType } from "../interface";
 
-// export type EmailFieldPropsType<T extends FieldValues> = {
-//   register: UseFormRegister<T>;
-//   errors: FieldErrors<T>;
-//   fieldName: Path<T>;
-// };
-
 const EmailField = <T extends FieldValues>({
   register,
   errors,
