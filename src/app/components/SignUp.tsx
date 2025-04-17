@@ -14,8 +14,16 @@ import { CompanyType } from "../interface";
 import { companySchema } from "../schema";
 
 const SignUp = () => {
-  const { setFormState, createCompany, success, isLoading, linkResendCount } =
-    useCompanyStore();
+  const {
+    setFormState,
+    createCompany,
+    success,
+    isLoading,
+    linkResendCount,
+    getResendLink,
+    resendEmail,
+    show,
+  } = useCompanyStore();
 
   const {
     register,
@@ -121,16 +129,28 @@ const SignUp = () => {
           </Button>
         </Box>
       </form>
-      <div className="w-full relative text-base leading-[24px] font-normal text-center md:flex md:flex-row md:items-center md:justify-center md:gap-2 pb-10">
-        <p className="text-[#737373] ">Already have an account? </p>
-        <Link href={"/sign-in"}>
-          <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
-        </Link>
-        {linkResendCount > 0 && (
-          <p className="text-sm text-gray-600">
-            Verification email resent {linkResendCount} times. (Maximum: 3
-            attempts per 24 hours)
-          </p>
+      <div className="w-full flex flex-col gap-2 items-center text-base leading-[24px] font-normal text-center md:flex md:flex-col md:items-center md:justify-center md:gap-1 pb-6 ">
+        <div className="w-ful flex items-center gap-2">
+          <p className="text-[#737373] ">Already have an account? </p>
+          <Link href={"/sign-in"}>
+            <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
+          </Link>
+        </div>
+        {show && (
+          <div className="w-full flex flex-col gap-1 items-center  ">
+            <button
+              onClick={() => getResendLink(resendEmail)}
+              type="button"
+              className="text-xs text-[#3A5B22] font-semibold cursor-pointer hover:underline transition-transform duration-300 ease-in-out hover:scale-105"
+            >
+              Resend verification link
+            </button>
+
+            <p className="text-xs text-gray-600">
+              Verification email resent {linkResendCount} times. (Maximum: 3
+              attempts per 24 hours)
+            </p>
+          </div>
         )}
       </div>
     </section>

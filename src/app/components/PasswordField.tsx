@@ -23,6 +23,7 @@ const PasswordField = <T extends FieldValues>({
             : fieldName
         )}
         type="password"
+        placeholder="Password"
         sx={{ width: "100%" }}
         {...register(fieldName)}
       />
