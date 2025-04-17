@@ -223,6 +223,10 @@ export interface ICompanyStore {
   getResendLink: (email: string) => void;
 
   clearPersistedState: () => void;
+
+
+  show: boolean;
+  setShow:(show: boolean) => void;
 }
 
 export interface ISignIn {
