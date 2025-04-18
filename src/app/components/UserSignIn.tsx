@@ -224,7 +224,7 @@
 // export default UserSignInPage;
 
 "use client";
-import { Box, Button, FormControl, Link, Typography } from "@mui/material";
+import { Box, Button, FormControl, Typography } from "@mui/material";
 import NameField from "./NameField";
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
@@ -240,14 +240,14 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { UserSignInType } from "../interface";
 import { userSignInSchema } from "../schema";
-import { useCompanyStore } from "../store/sign-up.store";
+// import { useCompanyStore } from "../store/sign-up.store";
 
 const UserSignIn = () => {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const [verificationStatus, setVerificationStatus] = useState(false);
-  const { getResendLink, linkResendCount } = useCompanyStore();
+  // const { getResendLink, linkResendCount } = useCompanyStore();
   const router = useRouter();
   // const [userResendEmail, setUserResendEmail] = useState("")
 
