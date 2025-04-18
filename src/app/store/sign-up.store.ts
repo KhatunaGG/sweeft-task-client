@@ -34,9 +34,7 @@ export const useCompanyStore = create<ICompanyStore>()(
       isLoading: false,
 
       show: false,
-      setShow: (show) => set({show}),
-
-
+      setShow: (show) => set({ show }),
 
       setResendEmail: (resendEmail: string) => set({ resendEmail }),
       setLinkResendCount: (linkResendCount) => set({ linkResendCount }),
@@ -45,7 +43,7 @@ export const useCompanyStore = create<ICompanyStore>()(
         set({
           resendEmail: "",
           linkResendCount: 0,
-          show: false
+          show: false,
         });
         localStorage.removeItem("company-store");
       },
@@ -58,7 +56,7 @@ export const useCompanyStore = create<ICompanyStore>()(
           const res = await axiosInstance.post("/auth/sign-up", data);
           if (res.status >= 200 && res.status <= 204) {
             set({ isLoading: true, axiosError: "", success: true });
-          
+
             set({
               isLoading: true,
               axiosError: "",
@@ -96,7 +94,6 @@ export const useCompanyStore = create<ICompanyStore>()(
           if (res.status >= 200 && res.status <= 204) {
             // set({ linkResendCount: get().linkResendCount + 1 });
 
-
             const newCount = get().linkResendCount + 1;
 
             if (newCount >= 3) {
@@ -105,15 +102,6 @@ export const useCompanyStore = create<ICompanyStore>()(
               set({ linkResendCount: newCount }); // Only update count if not clearing
             }
 
-
-
-
-
-
-
-
-
-
             toast.success("Link sent successfully! Please check your email.");
           }
         } catch (e) {
@@ -121,10 +109,10 @@ export const useCompanyStore = create<ICompanyStore>()(
           set({ axiosError: errorMessage });
         } finally {
           set({ isLoading: false });
-          if(get().linkResendCount >= 3) {
-            get().clearPersistedState()
+          if (get().linkResendCount >= 3) {
+            get().clearPersistedState();
           }
-        } 
+        }
       },
     }),
 
@@ -134,7 +122,7 @@ export const useCompanyStore = create<ICompanyStore>()(
       partialize: (state) => ({
         resendEmail: state.resendEmail,
         linkResendCount: state.linkResendCount,
-        show: state.show
+        show: state.show,
       }),
     }
   )
