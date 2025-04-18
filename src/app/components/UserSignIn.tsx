@@ -224,7 +224,7 @@
 // export default UserSignInPage;
 
 "use client";
-import { Box, Button, FormControl, Link, Typography } from "@mui/material";
+import { Box, Button, FormControl, Typography } from "@mui/material";
 import NameField from "./NameField";
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
@@ -240,17 +240,18 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { UserSignInType } from "../interface";
 import { userSignInSchema } from "../schema";
-import { useCompanyStore } from "../store/sign-up.store";
+// import { useCompanyStore } from "../store/sign-up.store";
 
 const UserSignIn = () => {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const [verificationStatus, setVerificationStatus] = useState(false);
-  const {resendEmail, getResendLink, linkResendCount} = useCompanyStore()
+  // const { getResendLink, linkResendCount } = useCompanyStore();
   const router = useRouter();
+  // const [userResendEmail, setUserResendEmail] = useState("")
 
-  console.log(linkResendCount, "linkResendCount")
+  // console.log(userResendEmail, "userResendEmail");
 
   useEffect(() => {
     setIsClient(true);
@@ -283,6 +284,15 @@ const UserSignIn = () => {
     },
   });
 
+  // useEffect(() => {
+  //   if (!isClient) return;
+
+  //   const storedEmail = localStorage.getItem("userResendEmail");
+  //   if (storedEmail) {
+  //     setUserResendEmail(storedEmail);
+  //   }
+  // }, [isClient]);
+
   const verifyUsersEmail = async (verificationToken: string) => {
     setVerificationStatus(false);
     try {
@@ -291,6 +301,8 @@ const UserSignIn = () => {
       );
       if (res.status >= 200 && res.status <= 204) {
         setVerificationStatus(true);
+        // setUserResendEmail(res.data.userEmail)
+        // localStorage.setItem("userResendEmail", res.data.userEmail);
       }
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -412,28 +424,14 @@ const UserSignIn = () => {
           </Box>
 
           <div className="w-full flex flex-col gap-2 items-center text-base leading-[24px] font-normal text-center md:flex md:flex-col md:items-center md:justify-center md:gap-1 pb-6 ">
-            <div className="w-ful flex items-center gap-2">
+            {/* <div className="w-ful flex items-center gap-2">
               <p className="text-[#737373] ">Already have an account? </p>
               <Link href={"/sign-in"}>
                 <p className="text-[#3A5B22] cursor-pointer">Sign in</p>
               </Link>
-            </div>
+            </div> */}
 
-              <div className="w-full flex flex-col gap-1 items-center  ">
-                <button
-                  onClick={() => getResendLink(resendEmail)}
-                  type="button"
-                  className="text-xs text-[#3A5B22] font-semibold cursor-pointer hover:underline transition-transform duration-300 ease-in-out hover:scale-105"
-                >
-                  Resend verification link
-                </button>
-
-                <p className="text-xs text-gray-600">
-                  Verification email resent {linkResendCount} times. (Maximum: 3
-                  attempts per 24 hours)
-                </p>
-              </div>
-
+           
           </div>
         </form>
       </div>
